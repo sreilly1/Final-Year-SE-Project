@@ -20,7 +20,7 @@ class AddSomeApplicationSpecificRowsToUsersTable extends Migration
             $table->integer('year_of_study');
             $table->integer('student_id');
 
-        })
+        });
     }
 
     /**
