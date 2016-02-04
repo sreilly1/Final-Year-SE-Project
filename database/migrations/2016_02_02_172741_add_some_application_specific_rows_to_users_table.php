@@ -30,6 +30,12 @@ class AddSomeApplicationSpecificRowsToUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function($table) {
+            $table->dropColumn('supervisor_name');
+            $table->dropColumn('phone_number');
+            $table->dropColumn('year_of_study');
+            $table->dropColumn('student_id');
+
+        });
     }
 }
