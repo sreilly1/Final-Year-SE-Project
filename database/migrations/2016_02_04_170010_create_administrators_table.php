@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTypesTable extends Migration
+class CreateAdministratorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateUserTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_Types', function (Blueprint $table) {
+        Schema::create('administrators', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('user_type', ['phd_student', 'lecturer', 'administrator']);
+            $table->string('user_id');
+            $table->enum('title',['Dr', 'Professor'])->nullable();
             $table->timestamps();
             
         });
-    
     }
 
     /**
@@ -28,6 +28,6 @@ class CreateUserTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_Types');
+        Schema::drop('lecturers');
     }
 }
