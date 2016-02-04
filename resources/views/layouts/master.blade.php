@@ -6,7 +6,7 @@
     </head>
     <body>
         @include('navbar')
-            {{-- The navbar should go here --}}
+            <!-- The navbar should go here -->
 
         <div class="container">
             @yield('content')
