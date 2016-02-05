@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhdStudentsTable extends Migration
+class CreateAdministratorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,14 @@ class CreatePhdStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('phd_students', function (Blueprint $table) {
+        Schema::create('administrators', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id');
-            $table->string('student_id');
-            $table->string('supervisor_name');
-            $table->string('year_of_study');
+            $table->integer('user_id')->unsigned();
+            $table->enum('title',['Dr', 'Professor'])->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+
+
+
             $table->timestamps();
             
         });
@@ -30,6 +32,6 @@ class CreatePhdStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('phd_students');
+        Schema::drop('administrators');
     }
 }

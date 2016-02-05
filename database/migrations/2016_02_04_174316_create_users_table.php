@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine='InnoDB';
             $table->increments('id');
             $table->string('user_name');
             $table->string('password', 60);
@@ -20,10 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('room_number');
-            $table->integer('user_type_id');
+            $table->integer('user_type_id')->unsigned();
+            $table->foreign('user_type_id')->references('id')->on('user_types');
             $table->rememberToken();
             $table->timestamps();
-        });
+        });   
     }
 
     /**

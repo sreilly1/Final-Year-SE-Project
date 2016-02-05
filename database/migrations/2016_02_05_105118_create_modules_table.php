@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdministratorsTable extends Migration
+class CreateModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,13 @@ class CreateAdministratorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('administrators', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id');
-            $table->enum('title',['Dr', 'Professor'])->nullable();
+            $table->string('module_code');
+            $table->string('module_name');
+            $table->string('module_leader');
             $table->timestamps();
-            
+
         });
     }
 
@@ -28,6 +29,6 @@ class CreateAdministratorsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('lecturers');
+        Schema::drop('modules');
     }
 }
