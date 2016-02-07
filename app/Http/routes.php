@@ -23,7 +23,7 @@ Route::get('/lol', function () {
     return view('jobDescription');
 });
 
-pRoute::resource('job', 'JobController');
+Route::resource('job', 'JobController');
 
 
 
