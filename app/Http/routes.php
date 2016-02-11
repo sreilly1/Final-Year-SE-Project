@@ -19,6 +19,13 @@ Route::get('/student/options', function () {
     return view('student-options');
 });
 
+Route::get('/lol', function () {
+    return view('jobDescription');
+});
+
+Route::resource('job', 'JobController');
+
+
 
 /*
 |--------------------------------------------------------------------------
