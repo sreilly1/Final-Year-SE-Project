@@ -11,8 +11,19 @@ class Usertest extends TestCase
      *
      * @return void
      */
-    public function testExample()
-    {
-        $this->assertTrue(true);
-    }
+    // public function testExample()
+    // {
+    //     $this->assertTrue(true);
+    // }
+
+
+    /**
+     * A test for the login of the three user types (phd students, admin, lecturers)
+     *
+     * @return void
+     */
+       public function loginTest()
+       {
+
+       }
 }
