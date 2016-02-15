@@ -27,6 +27,7 @@ Route::resource('job', 'JobController');
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
