@@ -25,6 +25,8 @@ Route::get('/lol', function () {
 
 Route::resource('job', 'JobController');
 
+Route::resource('EngagementForm', 'EngagementFormController');
+
 
 
 
