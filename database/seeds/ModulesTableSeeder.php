@@ -13,8 +13,10 @@ class ModulesTableSeeder extends Seeder
      */
     public function run()
     {
-        $modulesCSVFile = new CsvFile(__DIR__ . '/_data/book2.csv');
+        //Read in a csv file containing data(module code, module name, module leader on the currently running modules in the school of Computer Science and Informatics)
+        $modulesCSVFile = new CsvFile(__DIR__ . '/_data/modules.csv');
 
+        //Generate a record using data from each row/line of the CSV file where each row is in the format: module code, module name, module leader
 		foreach($modulesCSVFile as $currentRow) {
             Module::create(['module_code' => $currentRow[0], 'module_name' => $currentRow[1]]);
         }
