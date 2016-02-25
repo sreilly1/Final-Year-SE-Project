@@ -23,7 +23,7 @@ class ModulesTableSeeder extends Seeder
             Module::create([
                 'module_code' => trim($currentRow[0]), 
                 'module_name' => trim($currentRow[1]),
-                'module leader' => '1';
+                'module_leader' => '1'
                 ]);
         }
     }
