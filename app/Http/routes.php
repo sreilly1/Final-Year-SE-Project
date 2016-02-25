@@ -27,7 +27,10 @@ Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');
 
-
+Route::get('intuitiveAssignment', [
+	'as' => 'intuitiveAssignment',
+    'uses' => 'IntuitiveAssignmentController@performIntuitiveAssignment'
+]);
 
 
 /*
