@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\UserType;
 
-class DatabaseSeeder extends Seeder
+class UserTypesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(LecturersTableSeeder::class);
-        $this->call(ModulesTableSeeder::class);
+        
     }
 }
