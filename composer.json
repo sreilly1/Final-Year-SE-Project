@@ -51,4 +51,7 @@
     "config": {
         "preferred-install": "dist"
     }
+    "require": {
+        "google/apiclient": "1.0.*@beta"
+    }
 }
