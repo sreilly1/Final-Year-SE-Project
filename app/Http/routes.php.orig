@@ -27,15 +27,18 @@ Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');
 
+<<<<<<< HEAD
 Route::get('/assignment', function() {
 	return view('assignment');
 });
 
+
+=======
 Route::get('intuitiveAssignment', [
 	'as' => 'intuitiveAssignment',
     'uses' => 'IntuitiveAssignmentController@performIntuitiveAssignment'
 ]);
-
+>>>>>>> f274e0561ee2e17befe4d8af52be36948437d797
 
 
 /*
