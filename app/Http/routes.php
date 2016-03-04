@@ -27,6 +27,10 @@ Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');
 
+Route::get('/assignment', function() {
+	return view('assignment');
+});
+
 
 
 
