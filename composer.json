@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "doctrine/dbal": "v2.5.4",
-        "keboola/csv": "1.1.*"
+        "keboola/csv": "1.1.*",
+        "google/apiclient": "1.0.*@beta"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -51,7 +52,5 @@
     "config": {
         "preferred-install": "dist"
     }
-    "require": {
-        "google/apiclient": "1.0.*@beta"
-    }
+
 }
