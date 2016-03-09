@@ -25,13 +25,9 @@ class ModulesActivitiesTableSeeder extends Seeder
                 'module_id' => trim($currentRow[1]),
                 'staff_1' => trim($currentRow[2]),
                 'activity_date' => trim($currentRow[3]),
-                'weeks' => trim($currentRow[4]),
-                'from_hour' => trim($currentRow[5]),
-                'am_pm' => trim($currentRow[6]),
-                'to_hour' => trim($currentRow[7]),
-                'am_pm_2' => trim($currentRow[8]),
-                'quant_ppl_needed' => trim($currentRow[9]),
-                'location' => trim($currentRow[10]),
+                'activity_time' => trim($currentRow[4]),
+                'quant_ppl_needed' => trim($currentRow[5]),
+                'location' => trim($currentRow[6]),
             ]);
         }
     }
