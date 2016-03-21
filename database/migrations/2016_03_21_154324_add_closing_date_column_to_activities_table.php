@@ -5,6 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddClosingDateColumnToActivitiesTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -13,7 +14,7 @@ class AddClosingDateColumnToActivitiesTable extends Migration
     public function up()
     {
         Schema::table('activities', function($table) {
-            $table->date('closing_date');
+            $table->date('closing_date')->after('location');
         });
     }
 
