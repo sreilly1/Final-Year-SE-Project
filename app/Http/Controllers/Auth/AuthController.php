@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
     /**
      * Where to redirect users after logout.
@@ -75,5 +75,12 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function redirectPath() {
+        //add further kinds of logic, i.e. the way in which redirect to lecturer, admin and phd student panels
+        if(\Auth::user()->id == 3) {
+            return '/home';
+        }
     }
 }
