@@ -5,7 +5,7 @@ use Keboola\Csv\CsvFile;
 use App\User;
 use App\Lecturer;
 
-class LecturersSeeder extends Seeder
+class LecturerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -28,17 +28,16 @@ class LecturersSeeder extends Seeder
             $parts = explode(' ', $currentRow[2]);
             $user = User::create([
                 'username' => trim($currentRow[0]),
-                'password' => Hash::make(trim($currentRow[1])),
+                'password' => Hash::make(trim($currentRow[1])), //hash the password as it is 'plaintext' in the CSV file
                 'title' => trim($parts[0]),
                 'name' => trim(utf8_decode($parts[1].$parts[2])),
                 'email' => trim($currentRow[3].COMSC_EMAIL_DOMAIN),
                 'phone_number' => trim(COMSC_EXTENSION_NUMBER_PREFIX . $currentRow[4]),
-                'room_number' => trim($currentRow[5])
-                'role' => 'Lecturer'; 
-            ]);
-            Lecturer::create([
-                'user_id' => $user->id
+                'room_number' => trim($currentRow[5]),
+                'role' => 'Lecturer'
             ]);
         }
     }
 }
+
+
