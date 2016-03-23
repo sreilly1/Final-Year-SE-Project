@@ -13,7 +13,8 @@ class AddHourPerWeekColumnToPhdStudentsTable extends Migration
     public function up()
     {
         Schema::table('phd_students', function ($table) {
-            $table->integer('hours_per_week');
+            //default value set to 0
+            $table->integer('hours_per_week')->default(0)->after('year_of_study'); 
         });
     }
 
