@@ -13,6 +13,9 @@ class ModulesTableSeeder extends Seeder
      */
     public function run()
     {
+        //truncate the modules table so that the auto incrementing 'id' field starts counting from 1 again
+        DB::table('modules')->truncate();
+
         //Read in a csv file containing data(module code, module name, module leader on the currently running modules 
         //in the school of Computer Science and Informatics) from the _data directory
         $modulesCSVFile = new CsvFile(__DIR__ . '/_data/Modules.csv');

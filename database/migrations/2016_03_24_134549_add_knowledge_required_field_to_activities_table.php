@@ -3,9 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddClosingDateColumnToActivitiesTable extends Migration
+class AddKnowledgeRequiredFieldToActivitiesTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,7 +13,7 @@ class AddClosingDateColumnToActivitiesTable extends Migration
     public function up()
     {
         Schema::table('activities', function($table) {
-            $table->date('closing_date_for_applications');
+            $table->string('knowledge_required');
         });
     }
 
@@ -26,7 +25,7 @@ class AddClosingDateColumnToActivitiesTable extends Migration
     public function down()
     {
         Schema::table('activities', function($table) {
-            $table->dropColumn('closing_date_for_applications');
+            $table->dropColumn('knowledge_required');
         });
     }
 }
