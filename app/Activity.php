@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Session;
 
 class Activity extends Model
 {
@@ -18,4 +17,11 @@ class Activity extends Model
     	//https://laravel.com/docs/master/eloquent-relationships#one-to-many
     	return $this->hasMany('App\Session');
     }
+
+    /**
+     * Get the activity requests (applications) for the support activity (lab, tutorial, etc).
+     */
+   	public function activityRequests() {
+   		return $this->hasMany('App\ActivityRequest');
+   	}
 }
