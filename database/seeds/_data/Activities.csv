@@ -1,22 +1,20 @@
-Some Title,Demonstrator,Induction activities,1,1,2015-09-01,A familiariity with the Labs in COMSC and library software
-Some Title,Teaching,Induction activities,1,1,2015-09-01,A familiariity with the Labs in COMSC and library software
-Some Title,Demonstrator,CM1101,1,1,2015-09-01,"A familiariity with the PC Labs in COMSC, Python programming and introductory level assembly language programming."
-Some Title,Teaching,CM1101,1,1,2015-09-01,"A familiariity with the PC Labs in COMSC, Python programming and introductory level assembly language programming."
-Some Title,Demonstrator,CM1102,1,1,2015-09-01,An understanding of HTML and PHP programming programming Languages
-Some Title,Teaching,CM1102,1,1,2015-09-01,An understanding of HTML and PHP programming programming Languages
-Some Title,Demonstrator,CM1103,1,1,2015-09-01,Knowledge of Python Programming
-Some Title,Teaching,CM1103 ,1,1,2015-09-01,Knowledge of Python Programming
-Some Title,Demonstrator,CM1103 ,1,1,2015-09-01,"Propositional logic, set theory, permutations and combinations, basic statistics and probability."
-Some Title,Teaching,CM1103,1,1,2015-09-01,"Propositional logic, set theory, permutations and combinations, basic statistics and probability."
-Some Title,Demonstrator,CM1201,1,1,2015-09-01,"LaTex, Sublime Text editor, GIT."
-Some Title,Teaching,CM1201,1,1,2015-09-01,"LaTex, Sublime Text editor, GIT."
-Some Title,Demonstrator,CM2102 ,1,1,2015-09-01,relational database queries and  SQL
-Some Title,Teaching,CM2102 ,1,1,2015-09-01,relational database queries and  SQL
-Some Title,Demonstrator,CM2103,1,1,2015-09-01,Knowledge of the iThink modelling application
-Some Title,Teaching,CM2103,1,1,2015-09-01,Knowledge of the iThink modelling application
-Some Title,Demonstrator,CM2104,1,1,2015-09-01,"knowledge of MATLAB programming, plus Linear Algebra, Discrete Probability Theory and Geometric Computing for Computer Graphics"
-Some Title,Teaching,CM2104,1,1,2015-09-01,"knowledge of MATLAB programming, plus Linear Algebra, Discrete Probability Theory and Geometric Computing for Computer Graphics"
-Some Title,Demonstrator,CM2105,1,1,2015-09-01,"Python modules for data processing: Pandas, statsmodels, networkx, web apis. matplotlib & Statistical methods.
+Some Title,Demonstrator,CM1101,1,1,01/09/2015,"A familiariity with the PC Labs in COMSC, Python programming and introductory level assembly language programming."
+Some Title,Teaching,CM1101,1,1,01/09/2015,"A familiariity with the PC Labs in COMSC, Python programming and introductory level assembly language programming."
+Some Title,Demonstrator,CM1102,1,1,01/09/2015,An understanding of HTML and PHP programming programming Languages
+Some Title,Teaching,CM1102,1,1,01/09/2015,An understanding of HTML and PHP programming programming Languages
+Some Title,Demonstrator,CM1103,1,1,01/09/2015,Knowledge of Python Programming
+Some Title,Teaching,CM1103 ,1,1,01/09/2015,Knowledge of Python Programming
+Some Title,Demonstrator,CM1103 ,1,1,01/09/2015,"Propositional logic, set theory, permutations and combinations, basic statistics and probability."
+Some Title,Teaching,CM1103,1,1,01/09/2015,"Propositional logic, set theory, permutations and combinations, basic statistics and probability."
+Some Title,Demonstrator,CM1201,1,1,01/09/2015,"LaTex, Sublime Text editor, GIT."
+Some Title,Teaching,CM1201,1,1,01/09/2015,"LaTex, Sublime Text editor, GIT."
+Some Title,Demonstrator,CM2102 ,1,1,01/09/2015,relational database queries and  SQL
+Some Title,Teaching,CM2102 ,1,1,01/09/2015,relational database queries and  SQL
+Some Title,Demonstrator,CM2103,1,1,01/09/2015,Knowledge of the iThink modelling application
+Some Title,Teaching,CM2103,1,1,01/09/2015,Knowledge of the iThink modelling application
+Some Title,Demonstrator,CM2104,1,1,01/09/2015,"knowledge of MATLAB programming, plus Linear Algebra, Discrete Probability Theory and Geometric Computing for Computer Graphics"
+Some Title,Teaching,CM2104,1,1,01/09/2015,"knowledge of MATLAB programming, plus Linear Algebra, Discrete Probability Theory and Geometric Computing for Computer Graphics"
+Some Title,Demonstrator,CM2105,1,1,01/09/2015,"Python modules for data processing: Pandas, statsmodels, networkx, web apis. matplotlib & Statistical methods.
 
     pandas
     statsmodels
@@ -54,7 +52,7 @@ Python modules for data processing,
     networkx
     web apis
 "
-Some Title,Teaching,CM2105,1,1,2015-09-01,"Python modules for data processing: Pandas, statsmodels, networkx, web apis. matplotlib & Statistical methods.
+Some Title,Teaching,CM2105,1,1,01/09/2015,"Python modules for data processing: Pandas, statsmodels, networkx, web apis. matplotlib & Statistical methods.
 
     pandas
     statsmodels
@@ -92,35 +90,35 @@ Python modules for data processing,
     networkx
     web apis
 "
-Some Title,Demonstrator,CM2201 ,1,1,2015-09-01,OO Java Programming and Design Patterns
-Some Title,Teaching,CM2201 ,1,1,2015-09-01,OO Java Programming and Design Patterns
-Some Title,Demonstrator,CM2302,1,1,2015-09-01,"data & wireless communication principles, standards and protocols. componemts of networks, & the various network types.  Internet working standards, relevant wireless technology and development for pervaisve environements. "
-Some Title,Teaching,CM2302,1,1,2015-09-01,"data & wireless communication principles, standards and protocols. componemts of networks, & the various network types.  Internet working standards, relevant wireless technology and development for pervaisve environements. "
-Some Title,Demonstrator,CM2303,1,1,2015-09-01,The Java programming language and implementing fundamental algorithms and data structures.
-Some Title,Teaching,CM2303,1,1,2015-09-01,The Java programming language and implementing fundamental algorithms and data structures.
-Some Title,Teaching,CM2305,1,1,2015-09-01,See separate job description
-Some Title,Teaching,CM3101,1,1,2015-09-01,"advanced Excel (in particular, data analysis using Analysis ToolPak)."
-Some Title,Demonstrator,CM3101,1,1,2015-09-01,"advanced Excel (in particular, data analysis using Analysis ToolPak)."
-Some Title,Teaching,CM3103,1,1,2015-09-01,"C programming, message passing, multithreaded programming using MPI and OpenMP,  CUDA.."
-Some Title,Demonstrator,CM3104,1,1,2015-09-01,"general knowledge of Java; general databases knowledge; general ontology knowledge. also know about NoSQL databases such as MongoDB, and about the Protege software. Familiarity with the spatial database functionality of Oracle (i.e. Oracle Spatial)."
-Some Title,Demonstrator,CM3106,1,1,2015-09-01,"MATLAB, good maths. Preferably some DSP, Digital Audio and Image processing skills."
-Some Title,Teaching,CM3106,1,1,2015-09-01,"MATLAB, good maths. Preferably some DSP, Digital Audio and Image processing skills."
-Some Title,Demonstrator,CM3109,1,1,2015-09-01,"A knowledge of linear programming, graph theory, Neural networks, Metaheuristic techniques and evolutionary algorithms including ant and swarm. Search and constraint satisfaction"
-Some Title,Teaching,CM3109,1,1,2015-09-01,"A knowledge of linear programming, graph theory, Neural networks, Metaheuristic techniques and evolutionary algorithms including ant and swarm. Search and constraint satisfaction"
-Some Title,Demonstrator,CM3110,1,1,2015-09-01,Python programming skills to graduate level  and Knowledge of cryptography
-Some Title,Teaching,CM3110,1,1,2015-09-01,Python programming skills to graduate level  and Knowledge of cryptography
-Some Title,Demonstrator,CM3111,1,1,2015-09-01,"Forensics techniques,  and file systems "
-Some Title,Teaching,CM3112,1,1,2015-09-01,"have taken an artificial intelligence module, have a good understanding of datastructures & algorithms and some background in probability theory"
-Some Title,Demonstrator,CM3112,1,1,2015-09-01,"have taken an artificial intelligence module, have a good understanding of datastructures & algorithms and some background in probability theory"
-Some Title,Teaching,CM3113 ,1,1,2015-09-01,an understanding of computer vision and image processing to degree level
-Some Title,Demonstrator,CM3113 ,1,1,2015-09-01,an understanding of computer vision and image processing to degree level
-Some Title,Teaching,CM3114,1,1,2015-09-01,"A knowledge of basic graphics API, Understand the mathematics and data structures used for graphics transformations, projection, and curve, surface and solid modelling. A knowldeg of common algorithms for ray tracing and understand how to apply them"
-Some Title,Demonstrator,CM3114,1,1,2015-09-01,"A knowledge of basic graphics API, Understand the mathematics and data structures used for graphics transformations, projection, and curve, surface and solid modelling. A knowldeg of common algorithms for ray tracing and understand how to apply them"
-Some Title,Teaching,CMT102,1,1,2015-09-01,Assembly language programming
-Some Title,Demonstrator,CMT102,1,1,2015-09-01,Assembly language programming
-Some Title,Demonstrator,CMT103,1,1,2015-09-01,The Python Programming Language
-Some Title,Demonstrator,CMT107,1,1,2015-09-01,"Java , open GL"
-Some Title,Teaching,CMT107,1,1,2015-09-01,"Java , open GL"
-Some Title,Demonstrator,CMT112,1,1,2015-09-01,"HTML, CSS, Java Script"
-Some Title,Demonstrator,CMT303,1,1,2015-09-01,UML
-Some Title,Teaching,CMT304,1,1,2015-09-01,"Haskell, Pascal, Scala, Prolog, Lisp, Java, Unic Bash Scripts & regular expressions"
+Some Title,Demonstrator,CM2201 ,1,1,01/09/2015,OO Java Programming and Design Patterns
+Some Title,Teaching,CM2201 ,1,1,01/09/2015,OO Java Programming and Design Patterns
+Some Title,Demonstrator,CM2302,1,1,01/09/2015,"data & wireless communication principles, standards and protocols. componemts of networks, & the various network types.  Internet working standards, relevant wireless technology and development for pervaisve environements. "
+Some Title,Teaching,CM2302,1,1,01/09/2015,"data & wireless communication principles, standards and protocols. componemts of networks, & the various network types.  Internet working standards, relevant wireless technology and development for pervaisve environements. "
+Some Title,Demonstrator,CM2303,1,1,01/09/2015,The Java programming language and implementing fundamental algorithms and data structures.
+Some Title,Teaching,CM2303,1,1,01/09/2015,The Java programming language and implementing fundamental algorithms and data structures.
+Some Title,Teaching,CM2305,1,1,01/09/2015,See separate job description
+Some Title,Teaching,CM3101,1,1,01/09/2015,"advanced Excel (in particular, data analysis using Analysis ToolPak)."
+Some Title,Demonstrator,CM3101,1,1,01/09/2015,"advanced Excel (in particular, data analysis using Analysis ToolPak)."
+Some Title,Teaching,CM3103,1,1,01/09/2015,"C programming, message passing, multithreaded programming using MPI and OpenMP,  CUDA.."
+Some Title,Demonstrator,CM3104,1,1,01/09/2015,"general knowledge of Java; general databases knowledge; general ontology knowledge. also know about NoSQL databases such as MongoDB, and about the Protege software. Familiarity with the spatial database functionality of Oracle (i.e. Oracle Spatial)."
+Some Title,Demonstrator,CM3106,1,1,01/09/2015,"MATLAB, good maths. Preferably some DSP, Digital Audio and Image processing skills."
+Some Title,Teaching,CM3106,1,1,01/09/2015,"MATLAB, good maths. Preferably some DSP, Digital Audio and Image processing skills."
+Some Title,Demonstrator,CM3109,1,1,01/09/2015,"A knowledge of linear programming, graph theory, Neural networks, Metaheuristic techniques and evolutionary algorithms including ant and swarm. Search and constraint satisfaction"
+Some Title,Teaching,CM3109,1,1,01/09/2015,"A knowledge of linear programming, graph theory, Neural networks, Metaheuristic techniques and evolutionary algorithms including ant and swarm. Search and constraint satisfaction"
+Some Title,Demonstrator,CM3110,1,1,01/09/2015,Python programming skills to graduate level  and Knowledge of cryptography
+Some Title,Teaching,CM3110,1,1,01/09/2015,Python programming skills to graduate level  and Knowledge of cryptography
+Some Title,Demonstrator,CM3111,1,1,01/09/2015,"Forensics techniques,  and file systems "
+Some Title,Teaching,CM3112,1,1,01/09/2015,"have taken an artificial intelligence module, have a good understanding of datastructures & algorithms and some background in probability theory"
+Some Title,Demonstrator,CM3112,1,1,01/09/2015,"have taken an artificial intelligence module, have a good understanding of datastructures & algorithms and some background in probability theory"
+Some Title,Teaching,CM3113 ,1,1,01/09/2015,an understanding of computer vision and image processing to degree level
+Some Title,Demonstrator,CM3113 ,1,1,01/09/2015,an understanding of computer vision and image processing to degree level
+Some Title,Teaching,CM3114,1,1,01/09/2015,"A knowledge of basic graphics API, Understand the mathematics and data structures used for graphics transformations, projection, and curve, surface and solid modelling. A knowldeg of common algorithms for ray tracing and understand how to apply them"
+Some Title,Demonstrator,CM3114,1,1,01/09/2015,"A knowledge of basic graphics API, Understand the mathematics and data structures used for graphics transformations, projection, and curve, surface and solid modelling. A knowldeg of common algorithms for ray tracing and understand how to apply them"
+Some Title,Teaching,CMT102,1,1,01/09/2015,Assembly language programming
+Some Title,Demonstrator,CMT102,1,1,01/09/2015,Assembly language programming
+Some Title,Demonstrator,CMT103,1,1,01/09/2015,The Python Programming Language
+Some Title,Demonstrator,CMT107,1,1,01/09/2015,"Java , open GL"
+Some Title,Teaching,CMT107,1,1,01/09/2015,"Java , open GL"
+Some Title,Demonstrator,CMT112,1,1,01/09/2015,"HTML, CSS, Java Script"
+Some Title,Demonstrator,CMT303,1,1,01/09/2015,UML
+Some Title,Teaching,CMT304,1,1,01/09/2015,"Haskell, Pascal, Scala, Prolog, Lisp, Java, Unic Bash Scripts & regular expressions"
