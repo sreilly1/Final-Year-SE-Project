@@ -27,6 +27,8 @@ class User extends Authenticatable
     /**
      * The sessions that belong to the user.
      */
+
+    //add s0me inf0 fr0m: https://laravel.com/docs/master/eloquent-relationships#many-to-many
     public function sessions() {
         return $this->belongsToMany('App\Session');
     }
