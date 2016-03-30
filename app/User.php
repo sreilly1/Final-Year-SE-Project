@@ -23,4 +23,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The sessions that belong to the user.
+     */
+    public function sessions() {
+        return $this->belongsToMany('App\Session');
+    }
 }
