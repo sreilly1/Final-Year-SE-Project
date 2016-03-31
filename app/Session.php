@@ -15,4 +15,9 @@ class Session extends Model
     	//https://laravel.com/docs/master/eloquent-relationships#one-to-many
     	return $this->belongsTo('App\Activity');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

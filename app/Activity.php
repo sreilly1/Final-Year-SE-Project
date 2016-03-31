@@ -25,6 +25,13 @@ class Activity extends Model
    		return $this->hasMany('App\ActivityRequest');
    	}
 
+     /**
+     * return the succesful applications for the support activity.
+     */
+    public function getSuccessfulApplications() {
+      return $this->activityRequests()->where('request_status', '=', 'confirmed');
+    }
+
    	/**
      * Get the module that owns the support activity(lab, tutorial, etc).
      */
