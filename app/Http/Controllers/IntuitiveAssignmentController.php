@@ -38,6 +38,9 @@ class IntuitiveAssignmentController extends Controller
 		asort($activityApplicationTally, SORT_NUMERIC); 
 
 		//pr0cess the activties in the assci0ative array 1 by 1.
+
+		$assignmentsMade = array(); //Ass0ciative array where key is the PHD student's ID in the database and
+		//the value is the id 0f the activity t0 which they were assigned
 		foreach($activityApplicationTally as $activityID => $numSuccesfulApplicants) {
 			
 			$numTutorsRequired = Activity::find($activityID)->quant_ppl_needed;
@@ -48,14 +51,21 @@ class IntuitiveAssignmentController extends Controller
 				//assign the succesful applicants t0 all sessi0ns f0r the activity
 				foreach($successfulApplications as $successfulApplication) {
 
-					$phdStudent = User::find($successfulApplication->user_id);
-					//$b = $activity->sessions->pluck('id');
+					$phdStudent = User::find($successfulApplication->user_id);;
 
 					//line bel0w fr0m here https://laravel.com/docs/master/collections#method-pluck, why d0es this w0rk?
 					$phdStudentSessions = $phdStudent->sessions()->attach($activity->sessions->pluck('id')->all());
+					$assignmentsMade[$phdStudent->name] = $activity->title;
 				}
 			}
 		}
+		//foreach($assignments as $assignment) {
+			//var_dump($assignment);
+		//}
+		return view('intuitiveAssignmentResults')->with('assignmentsMade',$assignmentsMade);
+		//var_dump( $assignments); 
+		//var_dump($phdStudentSessions);
+		//return  $phdStudentSessions;
     }
 }
 //Discuss ab0ut clashes with Helen, as they C0ULD be hard t0 handle pr0gramatically. Presumably PHD students w0uld be able t0 see when a lab class is 0N
