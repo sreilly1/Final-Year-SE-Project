@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    //protected $redirectTo = '/';
 
     /**
      * Where to redirect users after logout.
@@ -75,5 +75,23 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    //reference where got this from or maybe edit slightly ;)
+    //try and unit test this function
+    public function redirectPath() {
+        //add further kinds of logic, i.e. the way in which redirect to lecturer, admin and phd student panels
+
+
+        if(\Auth::user()->role == 'Administrator') {
+            return '/Admin-Dashboard';
+        }
+        if(\Auth::user()->role == 'Lecturer') {
+            return '/Lecturer-Dashboard';
+        }
+        if(\Auth::user()->role == 'PHD Student') {
+            return '/PHDStudent-Dashboard';
+        }
+
     }
 }

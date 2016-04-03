@@ -5,7 +5,7 @@ use Keboola\Csv\CsvFile;
 use App\User;
 use App\Lecturer;
 
-class LecturersTableSeeder extends Seeder
+class LecturerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,22 +21,23 @@ class LecturersTableSeeder extends Seeder
         $staffCSVFile = new CsvFile(__DIR__ . '/_data/staff.csv');
 
         //Generate a record using data from each line of the CSV file where each row is in the format: 
-        //username, password, title & name, email, extension number, room number
+        //username, password, title & name, email, extension number, room number. The value for the 'role'
+        //column is hard-coded, as this CSV file only contains data on Lecturers in the COMSC department
         foreach($staffCSVFile as $currentRow) {
 
             $parts = explode(' ', $currentRow[2]);
             $user = User::create([
                 'username' => trim($currentRow[0]),
-                'password' => Hash::make(trim($currentRow[1])),
+                'password' => Hash::make(trim($currentRow[1])), //hash the password as it is 'plaintext' in the CSV file
                 'title' => trim($parts[0]),
                 'name' => trim(utf8_decode($parts[1].$parts[2])),
                 'email' => trim($currentRow[3].COMSC_EMAIL_DOMAIN),
                 'phone_number' => trim(COMSC_EXTENSION_NUMBER_PREFIX . $currentRow[4]),
-                'room_number' => trim($currentRow[5])
-            ]);
-            Lecturer::create([
-                'user_id' => $user->id
+                'room_number' => trim($currentRow[5]),
+                'role' => 'Lecturer'
             ]);
         }
     }
 }
+
+

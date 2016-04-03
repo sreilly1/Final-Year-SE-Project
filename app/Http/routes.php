@@ -36,7 +36,10 @@ Route::get('intuitiveAssignment', [
     'uses' => 'IntuitiveAssignmentController@performIntuitiveAssignment'
 ]);
 
-
+Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
+    'as' => 'phdStudentExpenditure',
+    'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
+]);
 
 /*
 |--------------------------------------------------------------------------
