@@ -21,8 +21,9 @@ class ExpenditureController extends Controller
         //retrieve the PHD student via their primary key in the 'Users' table
         $phdStudent = User::find($id);
 
-        //0btain the sessi0ns that the PHD student has been assigned t0
-        $sessions = $phdStudent->sessions()->orderBy('date_of_session')->get();
+        //0btain all sessi0ns relating t0 the supp0rt activities that the PHD student has been assigned which
+        //fall within the date range signified by fr0mDate and t0Date, in ascending 0rder 0f the the date 0f the sessi0ns
+        $sessions = $phdStudent->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))->orderBy('date_of_session')->get();
         $totalHoursWorked = 0;
 
         foreach ($sessions as $session) {
@@ -32,6 +33,12 @@ class ExpenditureController extends Controller
         }
 
         $totalExpenditure = $totalHoursWorked * 8; //8 is the assumed payrate in £/hr
-        return view('calculatePHDStudentExpenditureResults')->with(['sessions' => $sessions, 'totalExpenditure' => $totalExpenditure, 'phdStudent' => $phdStudent, 'totalHoursWorked' =>$totalHoursWorked]);
+       
+        return view('thingy')->with([
+            'sessions' => $sessions, 
+            'totalExpenditure' => $totalExpenditure, 
+            'phdStudent' => $phdStudent, 
+            'totalHoursWorked' =>$totalHoursWorked
+        ]);
     }
 }

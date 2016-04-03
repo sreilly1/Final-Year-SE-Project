@@ -1,5 +1,5 @@
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/css/dataTables.boort Atstrap.css" rel="stylesheet">
 <div class="row">
 	<div class="col-sm-12">
 		<table id="table_id" class="table table-striped">
@@ -10,6 +10,7 @@ PHD Student Name: {{$phdStudent->name}}
 
 <thead>
 	<tr>   
+		<th>Support Activity Name</th>
 		<th>Date</th>
 		<th>Start Time</th>
 		<th>End Time</th>
@@ -18,18 +19,16 @@ PHD Student Name: {{$phdStudent->name}}
 <tbody>
 	@foreach($sessions as $session)
 	    <tr>
+	    	<td>{{$session->activity->title}}</td>
 	        <td>{{$session->date_of_session}}</td>
 	        <td>{{$session->start_time}}</td>
 	        <td>{{$session->end_time}}</td>
 	    </tr>                 
 	@endforeach
-	<tr>
-    <td colspan="2">Sum: $180</td>
-	</tr>
 </tbody>
 
 
-<p>Total Hours Worked: $totalHoursWorked</p>
+<p>Total Hours Worked: {{$totalHoursWorked}}</p>
 <p>Pay Rate; £8 per hour:</p>
 <p>Total Pay: £{{$totalExpenditure}}</p>
 

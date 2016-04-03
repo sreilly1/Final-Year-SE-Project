@@ -41,8 +41,6 @@ Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
     'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
 ]);
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
