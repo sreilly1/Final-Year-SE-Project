@@ -34,7 +34,7 @@ class ExpenditureController extends Controller
 
         $totalExpenditure = $totalHoursWorked * 8; //8 is the assumed payrate in £/hr
        
-        return view('thingy')->with([
+        return view('calculatePHDStudentExpenditureResults')->with([
             'sessions' => $sessions, 
             'totalExpenditure' => $totalExpenditure, 
             'phdStudent' => $phdStudent, 
