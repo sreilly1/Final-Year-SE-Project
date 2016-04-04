@@ -54,15 +54,16 @@ class ExpenditureController extends Controller
         foreach ($activities as $activity) {
             $sessions = $activity->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))->orderBy('date_of_session')->get();
             $totalHoursPerPerson = 0;
+            $activityTitle = $activity->title;
             foreach ($sessions as $session) {
                 $startTime = new Carbon($session->start_time); //http://carbon.nesbot.com/docs/#api-humandiff
                 $endTime = new Carbon($session->end_time); //http://carbon.nesbot.com/docs/#api-humandiff
                 $totalHoursPerPerson += $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff         
             }
-            if(array_key_exists($activity->title, $activityCosts)){
-                $activityCosts[$activity->title] += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate;
+            if(array_key_exists($activityTitle, $activityCosts)){
+                $activityCosts[$activityTitle] += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate;
             } else {
-                $activityCosts[$activity->title] = ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate; //this 0verwrites 0ld values2d
+                $activityCosts[$activityTitle] = ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate; //this 0verwrites 0ld values2d
             }
             //$activityCosts[$activity->id] = ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate; //this 0verwrites 0ld values
             $totalModuleCost += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate;
