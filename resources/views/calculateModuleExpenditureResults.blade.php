@@ -52,32 +52,28 @@
 				
         <p>Our solution for responsive tables requires two included files (both linked on this page): responsive-tables.css and responsive-tables.js.</p>
         <p>The JS will help us create some new elements on small devices, so we don't have to modify our table markup on the page. The CSS applies the requisite positioning and overflow styles to make the new elements work.</p>
-        <h5>Expenditure Breakdown for {{$phdStudent->name}}</h5>
-        <h5>Total Hours Worked: {{$totalHoursWorked}}</h5>
-        <h5>Pay Rate: £8 per hour</h5>
+        <h5>Expenditure Breakdown for {{$module->module_name}}</h5>
+        <h5>Pay Rate: £8 per hour (per tutor)</h5>
         <table class="responsive">
           <tbody>
          <tr>
+          
           <th>Support Activity</th>
-          <th>Date</th>
-          <th>Start Time</th>
-          <th>End Time</th>
+          <th>Expenditure</th>
         </tr>
         </tbody>
-        @foreach($sessions as $session)
-          <tr>
-            <td>{{$session->activity->title}}</td>
-            <td>{{$session->date_of_session}}</td>
-            <td>{{$session->start_time}}</td>
-            <td>{{$session->end_time}}</td>
-          </tr>                 
-        @endforeach
         <tr>
-          <td><h5>Total Expenditure: £{{$totalExpenditure}}</h5></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        @foreach($activityCosts as $activityID => $activityCost)
+         <tr>
+            <td>{{$activityID}}</td>
+            <td>£{{$activityCost}}</td>
+          </tr> 
+        @endforeach
         </tr>
+          <td><h5>Total Expenditure:£{{$totalModuleCost}}</h5></td>
+          <td></td>
+          <td></td>
+          <td></td>
 
       </table>
 
@@ -90,9 +86,6 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
 
 
