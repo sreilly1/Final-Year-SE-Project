@@ -59,7 +59,7 @@
          <tr>
           
           <th>Support Activity</th>
-          <th>Expenditure for Support Activity</th>
+          <th>Expenditure</th>
         </tr>
         </tbody>
         <tr>

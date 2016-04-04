@@ -58,7 +58,6 @@
         <table class="responsive">
           <tbody>
          <tr>
-          
           <th>Support Activity</th>
           <th>Date</th>
           <th>Start Time</th>
