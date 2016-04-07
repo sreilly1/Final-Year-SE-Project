@@ -16,7 +16,7 @@ class CreateModulesTable extends Migration
             $table->increments('id');
             $table->string('module_code');
             $table->string('module_name');
-            $table->integer('module_leader')->unsigned();
+            $table->integer('module_leader')->unsigned()->nullable();
             $table->foreign('module_leader')->references('id')->on('users');
             $table->timestamps();
 
