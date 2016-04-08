@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Session extends Model
 {
+
+    public $timestamps = false;
+
 	/**
      * Get the support activity that owns the session.
      */

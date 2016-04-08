@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Keboola\Csv\CsvFile;
 use App\Session;
+use App\Activity;
 
 class SessionsSeeder extends Seeder
 {
@@ -15,9 +17,10 @@ class SessionsSeeder extends Seeder
     	//truncate the activities table so that the auto incrementing 'id' field starts counting from 1 again
         DB::table('sessions')->truncate();
 
-        $activtiesCSVFile = new CsvFile(__DIR__ . '/_data/Sessions.csv');
+        $activtiesCSVFile = new CsvFile(__DIR__ . '/_data/SessionsData.csv');
 
-    	$supportActivity = Activity::where('title','=','CM1103 Python Programming Lab')->first();
+        //maybe make it w0rth with get(); s0meh0w
+    	$supportActivity = Activity::where('title','=','CM1103 Python Programming Lab')->where('role_type','=', 'Demonstrator')->first();
 
     	foreach($activtiesCSVFile as $currentRow) {
 
@@ -28,5 +31,6 @@ class SessionsSeeder extends Seeder
 				'end_time' => trim($currentRow[2]),
 				'location' => trim($currentRow[3]),
 		    ]);
+		}
     }
 }
