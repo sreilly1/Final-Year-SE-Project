@@ -41,11 +41,6 @@ Route::get('intuitiveAssignment', [
     'uses' => 'IntuitiveAssignmentController@performIntuitiveAssignment'
 ]);
 
-Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
-    'as' => 'phdStudentExpenditure',
-    'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
-]);
-
 Route::get('moduleExpenditure/{id}/{fromDate}/{toDate}', [
     'as' => 'moduleExpenditure',
     'uses' => 'ExpenditureController@calculateModuleExpenditure'
@@ -72,4 +67,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 
     Route::get('auth/logout', 'Auth\AuthController@logout');
+
+    Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
+        'as' => 'phdStudentExpenditure',
+        'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
+    ]);
+
 });

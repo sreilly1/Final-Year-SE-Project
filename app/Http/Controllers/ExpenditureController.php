@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\User;
 use Carbon\Carbon;
 use App\Module;
+use Illuminate\Support\Facades\Redirect;
 
 class ExpenditureController extends Controller
 {
@@ -20,41 +21,48 @@ class ExpenditureController extends Controller
 	 * @return Response
 	 */
     public function calculatePHDStudentExpenditure($id,$fromDate,$toDate) {
-        //retrieve the PHD student via their primary key in the 'Users' table
-        $phdStudent = User::find($id);
 
-        //0btain all sessi0ns relating t0 the supp0rt activities that the PHD student has been assigned which
-        //fall within the date range signified by fr0mDate and t0Date, in ascending 0rder 0f the the date 0f the sessi0ns
-        $sessions = $phdStudent->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))->orderBy('date_of_session')->get();
-        $totalHoursWorked = 0;
-        $totalExpenditure = 0;
-        $demonstratorHours = 0;
-        $teachingHours = 0;
+        $errors = $this->checkDateRangeValidity($fromDate, $toDate);
+        //var_dump( $errors );
+        if (empty($errors)) {
+            //retrieve the PHD student via their primary key in the 'Users' table
+            $phdStudent = User::find($id);
 
-        foreach ($sessions as $session) {
-            $startTime = new Carbon($session->start_time); //http://carbon.nesbot.com/docs/#api-humandiff maybe use phpdatetime instead
-            $endTime = new Carbon($session->end_time); //http://carbon.nesbot.com/docs/#api-humandiff
-            $sessionDuration = $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff
-            $totalHoursWorked += $sessionDuration;
-            $role = $session->activity->role_type;//the 'role' the PHD student was for the given 'session'
+            //0btain all sessi0ns relating t0 the supp0rt activities that the PHD student has been assigned which
+            //fall within the date range signified by fr0mDate and t0Date, in ascending 0rder 0f the the date 0f the sessi0ns
+            $sessions = $phdStudent->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))->orderBy('date_of_session')->get();
+            $totalHoursWorked = 0;
+            $totalExpenditure = 0;
+            $demonstratorHours = 0;
+            $teachingHours = 0;
 
-            if($role == 'Demonstrator') {
-                $payRate = 9.00;
-                $demonstratorHours += $sessionDuration;
-            } elseif ($role = 'Teaching') {
-                $payRate = 8.00;
-                $teachingHours += $sessionDuration;
+            foreach ($sessions as $session) {
+                $startTime = new Carbon($session->start_time); //http://carbon.nesbot.com/docs/#api-humandiff maybe use phpdatetime instead
+                $endTime = new Carbon($session->end_time); //http://carbon.nesbot.com/docs/#api-humandiff
+                $sessionDuration = $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff
+                $totalHoursWorked += $sessionDuration;
+                $role = $session->activity->role_type;//the 'role' the PHD student was for the given 'session'
+
+                if($role == 'Demonstrator') {
+                    $payRate = 9.00;
+                    $demonstratorHours += $sessionDuration;
+                } elseif ($role = 'Teaching') {
+                    $payRate = 8.00;
+                    $teachingHours += $sessionDuration;
+                }
+                $totalExpenditure += $sessionDuration * $payRate;
+
             }
-            $totalExpenditure += $sessionDuration * $payRate;
-
-        }
-        return view('calculatePHDStudentExpenditureResults')->with([
-            'sessions' => $sessions, 
-            'totalExpenditure'  => $totalExpenditure, 
-            'phdStudent'        => $phdStudent, 
-            'demonstratorHours' =>  $demonstratorHours,
-            'teachingHours'     =>   $teachingHours
-            ]);
+            return view('calculatePHDStudentExpenditureResults')->with([
+                'sessions' => $sessions, 
+                'totalExpenditure'  => $totalExpenditure, 
+                'phdStudent'        => $phdStudent, 
+                'demonstratorHours' =>  $demonstratorHours,
+                'teachingHours'     =>   $teachingHours
+                ]);
+        } else {
+            return Redirect::back()->withErrors($errors); 
+        }  
     }
 
     public function calculateModuleExpenditure($id,$fromDate,$toDate) {
@@ -91,5 +99,18 @@ class ExpenditureController extends Controller
             'activityCosts'     => $activityCosts
             ]);
     }   
+
+    //checks that the supplied date range is valid, i.e. 'fromDate' comes before 'toDate' chronologically
+    public function checkDateRangeValidity($fromDate,$toDate) {
+        $fromDate = new Carbon($fromDate);
+        $toDate = new Carbon($toDate);
+
+        $errors = array();
+        if($fromDate->gt($toDate)) {
+            array_push($errors, "the date range entered is invalid, please make sure the 'from' date is later than the 'to' date");
+            print "ayee";
+        }
+        return $errors;
+    }
 
 }

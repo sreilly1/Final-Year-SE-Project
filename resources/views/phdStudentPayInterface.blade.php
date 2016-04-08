@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 
 
+@if (session('errors'))
+	<p>{{ session('errors') }}</p>
+@endif
+
+
 
 
 <form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
