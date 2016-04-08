@@ -16,7 +16,8 @@ class CreatePhdStudentsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('student_id');
-            $table->string('supervisor_name');
+            $table->integer('supervisor_id')->unsigned()->nullable();
+            $table->foreign('supervisor_id')->references('id')->on('users');
             $table->string('year_of_study');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
