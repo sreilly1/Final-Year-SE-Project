@@ -23,6 +23,11 @@ Route::get('/lol', function () {
     return view('jobDescription');
 });
 
+Route::get('/phdStudentPayInterface', function () {
+    return view('/phdStudentPayInterface');
+});
+
+
 Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class IntuitiveAssignmentTest extends TestCase
+class PHDStudentPaymentTest extends TestCase
 {
     /**
      * A basic test example.
