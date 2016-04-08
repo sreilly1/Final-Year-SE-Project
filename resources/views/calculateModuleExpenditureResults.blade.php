@@ -67,12 +67,6 @@
           </tr> 
           @endforeach
           <tr>
-            <td><h5>Total Expenditure:£{{$totalModuleCost}}</h5></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
             <td><h5>Pay Rate for 'Demonstrator': £9.00 per hour (per tutor)</h5></td>
             <td></td>
             <td></td>

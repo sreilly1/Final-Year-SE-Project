@@ -39,15 +39,15 @@ class ExpenditureController extends Controller
             $role = $session->activity->role_type;//the 'role' the PHD student was for the given 'session'
 
             if($role == 'Demonstrator') {
-                $totalExpenditure += $sessionDuration * 9.00;
+                $payRate = 9.00;
                 $demonstratorHours += $sessionDuration;
             } elseif ($role = 'Teaching') {
-                $totalExpenditure += $sessionDuration * 8.00;
+                $payRate = 8.00;
                 $teachingHours += $sessionDuration;
             }
+            $totalExpenditure += $sessionDuration * $payRate;
 
         }
-
         return view('calculatePHDStudentExpenditureResults')->with([
             'sessions' => $sessions, 
             'totalExpenditure'  => $totalExpenditure, 
@@ -62,24 +62,28 @@ class ExpenditureController extends Controller
         $activities = $module->activities;
         $activityCosts = array();
         $totalModuleCost =0;
-        $payrate = 8.00;
-
         foreach ($activities as $activity) {
             $sessions = $activity->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))->orderBy('date_of_session')->get();
             $totalHoursPerPerson = 0;
             $activityTitle = $activity->title;
+            $role = $activity->role_type;//the 'role' the PHD student was for the given 'session'
+
+            if($role == 'Demonstrator') {
+                $payRate = 9.00;
+            } elseif ($role = 'Teaching') {
+                $payRate = 8.00;
+            }
             foreach ($sessions as $session) {
                 $startTime = new Carbon($session->start_time); //http://carbon.nesbot.com/docs/#api-humandiff
                 $endTime = new Carbon($session->end_time); //http://carbon.nesbot.com/docs/#api-humandiff
                 $totalHoursPerPerson += $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff         
             }
             if(array_key_exists($activityTitle, $activityCosts)){
-                $activityCosts[$activityTitle] += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate;
+                $activityCosts[$activityTitle] += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payRate;
             } else {
-                $activityCosts[$activityTitle] = ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate; //this 0verwrites 0ld values2d
+                $activityCosts[$activityTitle] = ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payRate; //this 0verwrites 0ld values2d
             }
-            //$activityCosts[$activity->id] = ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate; //this 0verwrites 0ld values
-            $totalModuleCost += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payrate;
+            $totalModuleCost += ($totalHoursPerPerson * $activity->quant_ppl_needed) * $payRate;
         }
         return view('calculateModuleExpenditureResults')->with([
             'module' => $module,
