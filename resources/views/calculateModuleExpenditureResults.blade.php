@@ -53,41 +53,57 @@
         <p>Our solution for responsive tables requires two included files (both linked on this page): responsive-tables.css and responsive-tables.js.</p>
         <p>The JS will help us create some new elements on small devices, so we don't have to modify our table markup on the page. The CSS applies the requisite positioning and overflow styles to make the new elements work.</p>
         <h5>Expenditure Breakdown for {{$module->module_name}}</h5>
-        <h5>Pay Rate: £8 per hour (per tutor)</h5>
         <table class="responsive">
           <tbody>
-         <tr>
-          
-          <th>Support Activity</th>
-          <th>Expenditure</th>
-        </tr>
+           <tr>
+            <th>Support Activity</th>
+            <th>Expenditure</th>
+          </tr>
         </tbody>
-        <tr>
-        @foreach($activityCosts as $activityID => $activityCost)
-         <tr>
+          @foreach($activityCosts as $activityID => $activityCost)
+          <tr>
             <td>{{$activityID}}</td>
             <td>£{{$activityCost}}</td>
           </tr> 
-        @endforeach
-        </tr>
-          <td><h5>Total Expenditure:£{{$totalModuleCost}}</h5></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          @endforeach
+          <tr>
+            <td><h5>Total Expenditure:£{{$totalModuleCost}}</h5></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><h5>Pay Rate for 'Demonstrator': £9.00 per hour (per tutor)</h5></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><h5>Pay Rate for 'Teaching': £8.00 per hour (per tutor)</h5></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><h5>Total Expenditure: £{{$totalModuleCost}}</h5></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
 
-      </table>
+        </table>
 
-      <div class="row">
-        <div class="six columns">
-          <p>In most cases, tables like this are okay at smaller sizes (since they'll break on every small word). However, with this many columns a very small device like a phone would still be a problem.</p>
-        </div>
-        <div class="six columns">
-          <p>By attaching a class of <strong>.responsive</strong> to the table, our JS/CSS will kick in.</p>
+        <div class="row">
+          <div class="six columns">
+            <p>In most cases, tables like this are okay at smaller sizes (since they'll break on every small word). However, with this many columns a very small device like a phone would still be a problem.</p>
+          </div>
+          <div class="six columns">
+            <p>By attaching a class of <strong>.responsive</strong> to the table, our JS/CSS will kick in.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
-</body>
-</html>
+  </body>
+  </html>

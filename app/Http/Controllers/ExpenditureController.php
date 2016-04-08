@@ -27,21 +27,34 @@ class ExpenditureController extends Controller
         //fall within the date range signified by fr0mDate and t0Date, in ascending 0rder 0f the the date 0f the sessi0ns
         $sessions = $phdStudent->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))->orderBy('date_of_session')->get();
         $totalHoursWorked = 0;
+        $totalExpenditure = 0;
+        $demonstratorHours = 0;
+        $teachingHours = 0;
 
         foreach ($sessions as $session) {
-            $startTime = new Carbon($session->start_time); //http://carbon.nesbot.com/docs/#api-humandiff
+            $startTime = new Carbon($session->start_time); //http://carbon.nesbot.com/docs/#api-humandiff maybe use phpdatetime instead
             $endTime = new Carbon($session->end_time); //http://carbon.nesbot.com/docs/#api-humandiff
-            $totalHoursWorked += $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff
+            $sessionDuration = $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff
+            $totalHoursWorked += $sessionDuration;
+            $role = $session->activity->role_type;//the 'role' the PHD student was for the given 'session'
+
+            if($role == 'Demonstrator') {
+                $totalExpenditure += $sessionDuration * 9.00;
+                $demonstratorHours += $sessionDuration;
+            } elseif ($role = 'Teaching') {
+                $totalExpenditure += $sessionDuration * 8.00;
+                $teachingHours += $sessionDuration;
+            }
+
         }
 
-        $totalExpenditure = $totalHoursWorked * 8; //8 is the assumed payrate in £/hr
-       
         return view('calculatePHDStudentExpenditureResults')->with([
             'sessions' => $sessions, 
-            'totalExpenditure' => $totalExpenditure, 
-            'phdStudent' => $phdStudent, 
-            'totalHoursWorked' =>$totalHoursWorked
-        ]);
+            'totalExpenditure'  => $totalExpenditure, 
+            'phdStudent'        => $phdStudent, 
+            'demonstratorHours' =>  $demonstratorHours,
+            'teachingHours'     =>   $teachingHours
+            ]);
     }
 
     public function calculateModuleExpenditure($id,$fromDate,$toDate) {
@@ -70,9 +83,9 @@ class ExpenditureController extends Controller
         }
         return view('calculateModuleExpenditureResults')->with([
             'module' => $module,
-            'totalModuleCost' =>$totalModuleCost,
-            'activityCosts' => $activityCosts
-        ]);
+            'totalModuleCost'   =>$totalModuleCost,
+            'activityCosts'     => $activityCosts
+            ]);
     }   
 
 }
