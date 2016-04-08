@@ -8,7 +8,10 @@ use App\Activity;
 class SessionsSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds. 
+     * As a result of this database seeder script, 4 sessions will be created for the 
+     * 'CM1103 Python Programming Lab' support activity, for which a single 
+     * Demonstrator' role is assumed to be required
      *
      * @return void
      */
