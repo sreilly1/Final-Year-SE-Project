@@ -46,6 +46,11 @@ Route::get('moduleExpenditure/{id}/{fromDate}/{toDate}', [
     'uses' => 'ExpenditureController@calculateModuleExpenditure'
 ]);
 
+Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
+    'as' => 'phdStudentExpenditure',
+    'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -67,10 +72,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 
     Route::get('auth/logout', 'Auth\AuthController@logout');
-
-    Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
-        'as' => 'phdStudentExpenditure',
-        'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
-    ]);
 
 });

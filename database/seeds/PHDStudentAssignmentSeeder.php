@@ -3,9 +3,9 @@
 use Illuminate\Database\Seeder;
 use App\ActivityRequest;
 use App\User;
+use App\Activity;
 
-
-class ApplicationSeeder extends Seeder
+class PHDStudentAssignmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class ApplicationSeeder extends Seeder
     	//the phd student is then assigned to all session (i.e. all combinations of a start time, end time and date) 
 		//for the 'CM1103 Python Programming Lab' 
 		$phdStudent = User::find(55);
-    	$supportActivity = Activity::where('title','=','CM1103 Python Programming Lab')->first();
+    	$supportActivity = Activity::where('title','=','CM1103 Python Programming Lab')->where('role_type','=', 'Demonstrator')->first();
         $assignments = $phdStudent->sessions()->attach($supportActivity->sessions->pluck('id')->all());
     }
 }
