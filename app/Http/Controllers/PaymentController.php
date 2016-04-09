@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Redirect;
 class PaymentController extends Controller
 {
     /**
-	 * Finds all sessions that a PHD student with a given 'id' in the database
-     * undertook within a given date range (expresssed by the 'fromDate' and 'toDate' parameters)
-     * and calculates the resoulting pay they are due.
+	 * Calculates the payment a PHD student was due from a given date range 
+	 * (expresssed by the 'fromDate' and 'toDate' parameters) and returns other relevant
+	 * details such as the sessions they undertook in that date range and the number
+	 * of hours they worked as a demonstrator, similarly with the role 'teaching'
+     * 
 	 *
 	 * @param  int  $id, string $fromDate, string $toDate
 	 * @return view
