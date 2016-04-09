@@ -46,9 +46,9 @@ Route::get('moduleExpenditure/{id}/{fromDate}/{toDate}', [
     'uses' => 'ExpenditureController@calculateModuleExpenditure'
 ]);
 
-Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
-    'as' => 'phdStudentExpenditure',
-    'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
+Route::get('phdStudentPayment/{id}/{fromDate}/{toDate}', [
+    'as' => 'phdStudentPayment',
+    'uses' => 'PaymentController@calculatePHDStudentPayment'
 ]);
 
 /*

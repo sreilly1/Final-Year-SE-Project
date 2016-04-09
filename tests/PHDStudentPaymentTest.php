@@ -11,15 +11,11 @@ class PHDStudentPaymentTest extends TestCase
      *
      * @return void
      */
-    public function testThingy() {
-    	//$this->visit('/http://localhost:8000/phdStudentExpenditure/55/2016-04-01/2016-04-30')
-    		// ->see('Responsive Tables');
-    	$response = $this->action('GET', 'ExpenditureController@calculatePHDStudentExpenditure', array(
+    public function testCalculationOfPHDStudentPayment() {
+    	$response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
     		'id' => 55,
     		'fromDate' =>'2015-10-01',
     		'toDate' => '2016-10-31'
-    		//'fromDate' => '2016-04-01',
-    		//'toDate' => '2016-04-30'
     	));
 
 
