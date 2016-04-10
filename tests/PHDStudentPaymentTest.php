@@ -12,21 +12,19 @@ class PHDStudentPaymentTest extends TestCase
      * @return void
      */
     public function testCalculationOfPHDStudentPayment() {
-    	$response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
-    		'id' => 55,
-    		'fromDate' =>'2015-10-01',
-    		'toDate' => '2016-10-31'
-    	));
+        $response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
+            'id' => 55,
+            'fromDate' =>'2015-10-15',
+            'toDate' => '2015-11-15'
+        ));
 
-
-
-    	//see https://laravel.com/docs/4.2/testing
     	$view = $response->original;
     	$this->assertEquals(36, $view['totalExpenditure']);
 
     	$this->assertEquals(4, $view['demonstratorHours']);
 
     	$this->assertEquals(0, $view['teachingHours']);
+
 
     }
 }

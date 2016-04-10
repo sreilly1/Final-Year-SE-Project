@@ -24,8 +24,8 @@ class PaymentController extends Controller
 	 */
     public function calculatePHDStudentPayment($id,$fromDate,$toDate) {
 
-        $errors = $this->checkDateRangeValidity($fromDate, $toDate);
-
+        //$errors = $this->checkDateRangeValidity($fromDate, $toDate);
+    	$errors = array();
         if (empty($errors)) {
             
             //retrieve the PHD student via their primary key in the 'Users' table (using the id passed to this function)
@@ -49,7 +49,6 @@ class PaymentController extends Controller
                 $endTime = new Carbon($session->end_time); //http://carbon.nesbot.com/docs/#api-humandiff
                 $sessionDuration = $startTime->diffInHours($endTime); //http://carbon.nesbot.com/docs/#api-humandiff
                 $totalHoursWorked += $sessionDuration; 
-
 
                 /*
                     Work out what role the PHD student undertook for the session
@@ -92,18 +91,5 @@ class PaymentController extends Controller
         } else {
             return Redirect::back()->withErrors($errors); 
         } 
-    }
-
-    //checks that the supplied date range is valid, i.e. 'fromDate' comes before 'toDate' chronologically
-    public function checkDateRangeValidity($fromDate,$toDate) {
-        $fromDate = new Carbon($fromDate);
-        $toDate = new Carbon($toDate);
-
-        $errors = array();
-        if($fromDate->gt($toDate)) {
-            array_push($errors, "the date range entered is invalid, please make sure the 'from' date is later than the 'to' date");
-            print "ayee";
-        }
-        return $errors;
     }
 }
