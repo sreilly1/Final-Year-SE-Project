@@ -15,14 +15,13 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->engine='InnoDB';
             $table->increments('id');
-            $table->string('user_name');
+            $table->string('username');
             $table->string('password', 60);
+            $table->enum('title',['Dr', 'Professor', 'Mr', 'Mrs', 'Miss', 'Ms'])->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('room_number');
-            $table->integer('user_type_id')->unsigned();
-            $table->foreign('user_type_id')->references('id')->on('user_types');
             $table->rememberToken();
             $table->timestamps();
         });   

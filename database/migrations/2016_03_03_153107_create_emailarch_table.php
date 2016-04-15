@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTypesTable extends Migration
+class CreateEmailarchTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,15 @@ class CreateUserTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_types', function (Blueprint $table) {
+        Schema::create('archive', function(Blueprint $table) {
             $table->increments('id');
-            $table->enum('user_type', ['phd_student', 'lecturer', 'administrator']);
+            $table->string('email_subject');
+            $table->string('rec_name');
+            $table->string('rec_email');
+            $table->string('message');
+            $table->timestamp('sent_at');
             $table->timestamps();
-            
         });
-    
     }
 
     /**
@@ -28,6 +30,6 @@ class CreateUserTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_types');
+        Schema::drop('archive');
     }
 }
