@@ -11,9 +11,6 @@
 	<h2>{{$error}}</h2>
 @endif
 
-
-
-
 <form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
 	<!-- 
 		the fields which will allow the user to select a date range for which to calculate
@@ -28,11 +25,6 @@
 
 	<button type="submit" id="submitBtn">Submit</button>
 </form>
-
-
-
-
-
 
 <script>
 $(function() {
