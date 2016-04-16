@@ -66,7 +66,7 @@ class PaymentController extends Controller
                 each variable in the view can then be referenced by the same name
                 as per the example given at 'https://laravel.com/docs/5.2/views'
             */
-            return view('calculatePHDStudentExpenditureResults')->with([
+            return view('calculatePHDPaymentResults')->with([
                 'sessions'                 => $sessions, 
                 'totalPayment'             => $totalPayment, 
                 'phdStudent'               => $phdStudent, 
