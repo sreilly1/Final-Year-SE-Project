@@ -43,21 +43,17 @@ class PaymentController extends Controller
             $hoursWorkedToRoleMapping = $this->getRoleToHoursWorkedMapping($sessions);
 
             $totalHoursWorked = 0;
-            $totalPayment = 0;
+            $totalPayment = 0.00;
 
             /*
-                use the mapping i.e. associative array returned by the getRoleToHoursWorkedMapping
-                function to determine the total number of hours worked accross all roles the 
-                phd student may undertake while tutoring and calculate the pay from this. 
+                increment the total payment by the number of hours that were worked 
+                as a 'demonstrator' multiplied by the assumed payrate. Similarly
+                with the number of hours worked under the 'Teaching' role
             */
-            foreach ($hoursWorkedToRoleMapping as $role => $hoursWorkedForRole) {
-                $totalHoursWorked += $hoursWorkedForRole;
-                if($role = 'Demonstrator'){
-                    $totalPayment += $hoursWorkedForRole * 9.00;
-                } else {
-                    $totalPayment += $hoursWorkedForRole* 8.00;
-                }
-            }
+            $demonstratorHours = $hoursWorkedToRoleMapping['Demonstrator'];
+            $totalPayment +=  $demonstratorHours * 12.21;
+            $teachingHours = $hoursWorkedToRoleMapping['Teaching'];
+            $totalPayment += $teachingHours * 10.58;
 
             /*
                 return the calculatePHDStudentExpenditureResult.blade.php file
@@ -72,9 +68,10 @@ class PaymentController extends Controller
             */
             return view('calculatePHDStudentExpenditureResults')->with([
                 'sessions'                 => $sessions, 
-                'totalPayment'            => $totalPayment, 
+                'totalPayment'             => $totalPayment, 
                 'phdStudent'               => $phdStudent, 
-                'hoursWorkedToRoleMapping' => $hoursWorkedToRoleMapping 
+                'demonstratorHours'        => $demonstratorHours,
+                'teachingHours'            => $teachingHours,
                 ]);
         } else {
             $error = 'The date range entered was invalid, please make sure the from date is earlier than the to date.';

@@ -22,17 +22,20 @@ class SessionsSeeder extends Seeder
 
         $activtiesCSVFile = new CsvFile(__DIR__ . '/_data/SessionsData.csv');
 
-        //maybe make it w0rth with get(); s0meh0w
-    	$supportActivity = Activity::where('title','=','CM1103 Python Programming Lab')->where('role_type','=', 'Demonstrator')->first();
+      
+    	
 
     	foreach($activtiesCSVFile as $currentRow) {
 
+            //maybe make it w0rth with get(); s0meh0w
+            $supportActivity = Activity::where('title','=',$currentRow[0])->first();
+
 		    $Session = Session::create([
 		    	'activity_id' => $supportActivity->id,
-		    	'date_of_session' => trim($currentRow[0]),
-				'start_time' => trim($currentRow[1]),
-				'end_time' => trim($currentRow[2]),
-				'location' => trim($currentRow[3]),
+		    	'date_of_session' => trim($currentRow[1]),
+				'start_time' => trim($currentRow[2]),
+				'end_time' => trim($currentRow[3]),
+				'location' => trim($currentRow[4]),
 		    ]);
 		}
     }
