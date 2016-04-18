@@ -55,6 +55,15 @@
 
 
             <div class="row">
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
                
                
                @if(Session::has('activity_deleted'))
@@ -101,6 +110,14 @@
                                 <div class="large-6 columns">
                                     <small>Module Code:</small>
                                     <h6>{{$module->module_code}}</h6>
+                                </div>
+                                <div class="large-12 columns">
+                                    <small>Module Description</small>                                        
+                                        @if($module->description === '')
+                                            <label class="error" align="center">This module has no description, please add description!</label>
+                                        @else
+                                            <textarea readonly="readonly" style="resize: none; min-height:100px;">{{$module->description}}</textarea>
+                                        @endif
                                 </div>
                             </div>
                     </fieldset>
@@ -181,6 +198,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

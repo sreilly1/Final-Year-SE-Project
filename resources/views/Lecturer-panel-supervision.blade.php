@@ -55,6 +55,15 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
             
 
             <div class="row">
@@ -86,10 +95,14 @@
                                     @else
                                     <fieldset class="bio">
                                         <legend class="legend"><label>PhD Students</label></legend>
-                                        <dl class="sub-nav">
-                                            <dd class="active"><a href="#">PhD Students</a></dd>
-                                            <dd><a href="/Lecturer/{{$user->id}}/Sup/Requests">Confirmation Requests</a></dd>
-                                        </dl>
+                                        <ul class="breadcrumbs">
+                                            <li class="current"><a>PhD Students</a></li>
+                                            @if(count($requests) == 0)
+                                            <li class="unavailable"><a style="color:red;" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="You have no applications requests that were done by any of your PhD Students">Confirmation Requests</a></li>
+                                            @else
+                                            <li><a href="/Lecturer/{{$user->id}}/Sup/Requests">Confirmation Requests</a></li>
+                                            @endif
+                                        </ul>
                                         <table>
                                             <thead>
                                                 <tr>
@@ -102,7 +115,11 @@
                                             <tbody>
                                                 @foreach($users as $phd)
                                                 <tr>
-                                                    <td>{{$phd->user->title}}. {{$phd->user->name}}</td>
+                                                    @if (App\AddRequest::where('user_id', $phd->user->id)->where('supervisor_confirmation', '=', 'Pending')->exists())
+                                                        <td><a style="color:#778899;" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="This PhD Student has requested Job Application that needs to be confirmed by you">{{$phd->user->title}}. {{$phd->user->name}}</a></td>
+                                                    @else
+                                                        <td>{{$phd->user->title}}. {{$phd->user->name}}</td>
+                                                    @endif
                                                     <td>{{$phd->user->username}}</td>  
                                                     <td>{{$phd->year_of_study}}</td>                                                                                           
                                                     <td><a href="/Lecturer/{{$user->id}}/Sup/Stu{{$phd->user_id}}">View</a></td>

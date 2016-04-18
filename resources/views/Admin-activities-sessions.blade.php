@@ -35,8 +35,13 @@
 
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
-            <li><a href="/Admin/{{$user->id}}/Activities">Support Activities</a></li>
-            <li class="active"><a href="#">Sessions</a></li>
+            <li class="active has-dropdown">
+                <a>Session</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Support Activities</a></li>
+                </ul>
+            </li>
         </ul>
 
       </section>
@@ -47,7 +52,7 @@
 
     <header>
 
-        <h2 class="welcome_text">Current Support Activities</h2>
+       <label><h2 class="welcome_text">Sessions <small>Ordered by Date</small></h2></label>
     </header>
 
     <!-- ######################## Section ######################## -->
@@ -61,6 +66,14 @@
 
         <div style="width:100%;"> <!-- Main Div -->
             
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
 
             <div class="row">
                 <div class="large-12 columns">
@@ -89,8 +102,9 @@
 
 
 
+
                             <div class="row">
-                                <div class="large-12 medium-12 small-12 columns">
+                                <div class="large-12 medium-12 small-12 columns scroll">
                                     @if(Session::has('no_sessions'))
                                         <div class="row">
                                             <div class="large-12 medium-12 small-12 columns">
@@ -108,6 +122,7 @@
                                         <table>
                                             <thead>
                                                 <tr>
+                                                    <th>Title</th>
                                                     <th>Module</th>
                                                     <th>Support Activity</th>
                                                     <th>Date</th>
@@ -119,12 +134,13 @@
                                             <tbody>
                                                 @foreach($sessions as $session)
                                                 <tr>
+                                                    <td>{{$session->title}}</td>
                                                     <td>{{$session->activity->module->module_name}}</td>
                                                     <td>{{$session->activity->title}}</td>
                                                     <td>{{date("d-m-Y", strtotime($session->date_of_session))}}</td> 
                                                     <td>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td> 
                                                     <td>{{$session->location}}</td> 
-                                                    <td><a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}">View</a> - <a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}/Modify">Edit</a> - <a href="/Admin/{{$user->id}}/Activities/Sessions/Delete/{{$session->id}}">Delete</a></td>
+                                                    <td><a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}" >View</a></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

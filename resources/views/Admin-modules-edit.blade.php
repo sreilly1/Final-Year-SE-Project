@@ -33,7 +33,14 @@
         
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
-            <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+            <li class="has-dropdown">
+                <a>- Take to -</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
             <li><a href="/Admin/{{$user->id}}/Modules/{{$module->id}}">{{$module->module_name}}</a></li>
             <li class="active"><a href="#">Edit</a></li>
         </ul>
@@ -77,7 +84,7 @@
                     <fieldset class="bio">
 
                         <legend class="legend">Module Information</legend>
-                            <form action="/Admin/{{$user->id}}/Modules/{{$module->id}}/updateMod" role="form" method="post">
+                            <form action="/Admin/{{$user->id}}/Modules/{{$module->id}}/updateMod" role="form" method="post" id="editModule">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="large-4 columns">
                                     <label>Module Name</label>
@@ -108,6 +115,11 @@
                                         @endforeach
                                     </select>
                                 @endif
+                                </div>
+                                <div class="large-12 columns">
+                                    <label>Module Description
+                                        <textarea name="description" value="{{$module->description}}" form="editModule" style="resize: none; min-height:100px;">{{$module->description}}</textarea>
+                                    </label>
                                 </div>
                                 <div class="large-2 columns">
                                     <input type="submit" value="update" class="nice tiny blue radius button">
@@ -189,7 +201,7 @@
                                 <tr>
                                     <td>{{$activities->title}}</td>
                                     <td>{{$activities->role_type}}</td>
-                                    <td><a href="/Admin/{{$user->id}}/Activities/{{$activities->id}}" target="_blank">View</a></td>
+                                    <td><a href="/Admin/{{$user->id}}/Activities/{{$activities->id}}" >View</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -225,6 +237,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

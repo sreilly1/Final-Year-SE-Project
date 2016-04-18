@@ -60,6 +60,12 @@
                             <a href="#" class="close">&times;</a>
                         </div>
                     @endif
+                    @if(Session::has('failed'))
+                        <div data-alert class="alert-box alert">
+                            {{ Session::get('failed') }}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    @endif
                     @if(Session::has('email_success'))
                         <div data-alert class="alert-box secondary">
                             <label class="green">Email was successfully sent, please click <a data-reveal-id="CretML"><label><strong>here</strong></label></a> if you want to send another one</label>
@@ -380,7 +386,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
-
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

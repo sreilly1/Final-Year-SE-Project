@@ -42,7 +42,7 @@
 
 
     <header>
-        <h2 class="welcome_text">Available Support Activity of {{$module->module_name}}</h2>
+        <h2 class="welcome_text">Available Jobs of {{$module->module_name}}</h2>
     </header>
 
 
@@ -50,6 +50,16 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="large-12 medium-12 small-12 columns">
                     @if(Session::has('ErrMessage'))
@@ -75,7 +85,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <td>Activity Title</td>
+                            <td>Support Activity Title</td>
                             <td>Role Type</td>
                             <th>Choose</th>
                         </tr>
@@ -84,7 +94,11 @@
                         @foreach($activities as $activity)
                             @if (App\AddRequest::where('user_id', $user->id)->where('activity_id', $activity->id)->where('status', '=', 'Pending')->exists() or App\AddRequest::where('user_id', $user->id)->where('activity_id', $activity->id)->where('status', '=', 'Accepted')->exists() )
                                 <tr>
+                                    @if($activity->description === '')
                                     <td>{{$activity->title}}</td>
+                                    @else
+                                    <td>{{$activity->title}} -  <strong data-reveal-id="ActDesc-{{$activity->id}}" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Click here to view subject knowledge required for this job">?</strong></td>
+                                    @endif
                                     <td>{{$activity->role_type}}</td>
                                     <td><label class="error" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Looks like you already have requested this activity before">Requested</label></td>
                                 </tr>
@@ -93,10 +107,14 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="activity_id" value="{{$activity->id}}"/>
                                 <input type="hidden" name="user_id" value="{{$user->id}}"/>
-                                <input type="hidden" name="supervisor" value="{{$phd->supervisor->email}}"/>
+                                <input type="hidden" name="supervisor" value="{{$phd->supervisor->id}}"/>
                                 <input type="hidden" name="status" value="Pending"/>
                                 <tr>
+                                    @if($activity->description === '')
                                     <td>{{$activity->title}}</td>
+                                    @else
+                                    <td>{{$activity->title}} -  <strong data-reveal-id="ActDesc-{{$activity->id}}" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Click here to view subject knowledge required for this job">?</strong></td>
+                                    @endif
                                     <td>{{$activity->role_type}}</td>
                                     <td>
                                         <input style="font-size:0.9em; display:inline;  margin:0; padding:0; border:0; color:green; cursor:pointer; background-color: rgba(255, 255, 255, 0);" type="submit" value="Apply">
@@ -104,6 +122,16 @@
                                 </tr>
                             </form>
                             @endif
+                            <div id="ActDesc-{{$activity->id}}" class="reveal-modal xlarge" data-reveal>
+                                <h3>Subject Knowledge required of {{$activity->module_name}}</h3>
+                                <!-- Social Dialogue Section -->
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <textarea readonly="readonly" style="resize: none; min-height:150px;">{{$activity->description}}</textarea>
+                                    </div>
+                                </div>
+                                <a class="close-reveal-modal">&#215;</a>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>
@@ -143,6 +171,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

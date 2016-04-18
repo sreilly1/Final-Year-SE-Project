@@ -55,6 +55,15 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
             
 
             <div class="row">
@@ -79,7 +88,7 @@
 
                             <div class="row">
                                 <div class="large-12 medium-12 small-12 columns">
-                                    @if(Session::has('no_requests'))
+                                    @if(count($requests) == 0)
                                         <div class="row">
                                             <div class="large-12 medium-12 small-12 columns">
                                             <fieldset class="bio">
@@ -89,7 +98,7 @@
                                                     <dd class="active"><a href="#">Confirmation Requests</a></dd>
                                                 </dl>
                                                 <div data-alert class="alert-box secondary" align="center">
-                                                    <label class="error">{{ Session::get('no_requests') }}</label>
+                                                    <label class="error">You have no 'Pending' job applications at the moment.</label>
                                                 </div>
                                             </fieldset>
                                             </div>
@@ -97,10 +106,10 @@
                                     @else
                                     <fieldset class="bio">
                                         <legend class="legend"><label>PhD Students' Requests</label></legend>
-                                        <dl class="sub-nav">
-                                            <dd><a href="/Lecturer/{{$user->id}}/Sup">PhD Students</a></dd>
-                                            <dd class="active"><a href="#">Confirmation Requests</a></dd>
-                                        </dl>
+                                        <ul class="breadcrumbs">
+                                            <li><a href="/Lecturer/{{$user->id}}/Sup">PhD Students</a></li>
+                                            <li class="current"><a href="#">Confirmation Requests</a></li>
+                                        </ul>
                                         <table>
                                             <thead>
                                                 <tr>

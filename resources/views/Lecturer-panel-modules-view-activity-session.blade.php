@@ -35,7 +35,7 @@
             <li><a href="/Lecturer/{{$user->id}}/Modules">Modules</a></li>
             <li><a href="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}">{{$module->module_name}}</a></li>
             <li><a href="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}">{{$activity->title}}</a></li>
-            <li class="active"><a href="#">Session: #{{$session->id}}</a></li>
+            <li class="active"><a href="#">Session: {{$session->title}}</a></li>
         </ul>
 
       </section>
@@ -43,7 +43,7 @@
 
     <header>
 
-        <h2 class="welcome_text">Session #{{$session->id}}</h2>
+        <h2 class="welcome_text">{{$session->title}}</h2>
     </header>
 
     <!-- ######################## Section ######################## -->
@@ -94,8 +94,8 @@
                             <div class="row">
 
                                 <div class="large-3 columns">
-                                    <small>ID#</small>
-                                    <h6>{{$session->id}}</h6>
+                                    <small>Session Title:</small>
+                                    <h6>{{$session->title}}</h6>
                                 </div>
                                 <div class="large-3 columns">
                                     <small>Location</small>
@@ -209,6 +209,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

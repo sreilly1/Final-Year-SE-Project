@@ -32,12 +32,46 @@
           </li>
         </ul>
 
+        @if($session->activity->module->module_leader === null)
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
             <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
-            <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
-            <li class="active"><a href="#">Edit: {{$session->activity->title}}'s Session ID#: {{$session->id}}</a></li>
+            <li><a href="/Admin/{{$user->id}}/Activities/{{$session->activity->id}}">{{$session->activity->title}}</a></li>
+            <li>
+                <a href="#">
+                @if($session->title === '')
+                    Title missing for Session# {{$session->id}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @else
+                    {{$session->title}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @endif
+                </a>
+            </li>
         </ul>
+        @else
+        <ul class="left">
+            <li><a href="/Admin/{{$user->id}}">Main</a></li>
+            <li class="has-dropdown">
+                <a>- Take to -</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
+            <li><a href="/Admin/{{$user->id}}/Modules/{{$session->activity->module->id}}">{{$session->activity->module->module_name}}</a></li>
+            <li><a href="/Admin/{{$user->id}}/Activities/{{$session->activity->id}}">{{$session->activity->title}}</a></li>
+            <li>
+                <a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}">
+                @if($session->title === '')
+                    Title missing for Session# {{$session->id}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @else
+                    {{$session->title}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @endif
+                </a>
+            </li>
+            <li class="active"><a href="#">Edit</a></li>
+        </ul>
+        @endif
 
       </section>
     </nav>
@@ -82,8 +116,16 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="large-4 columns">
+                                        <label>Session Title:</label>
+                                        <input type="text" name="title" value="{{$session->title}}"/>
+                                    </div>
+                                    <div class="large-4 columns">
                                         <label>Date:</label>
                                         <input type="text" name="date_of_session" value="{{$session->date_of_session}}" id="dp">
+                                    </div>
+                                    <div class="large-4 columns">
+                                        <label>Session Location:</label>
+                                        <input type="text" name="location" value="{{$session->location}}"/>
                                     </div>
                                     <div class="large-4 columns">
                                     <label>Session Start Time:</label>
@@ -93,17 +135,13 @@
                                         <label>Session End Time:</label>
                                         <input type="text" name="end_time" value="{{date("H:i", strtotime($session->end_time))}}"/>
                                     </div>
-                                    <div class="large-4 columns">
-                                        <label>Session Location:</label>
-                                        <input type="text" name="location" value="{{$session->location}}"/>
-                                    </div>
 
-                                    <div class="large-4 columns">
+                                    <div class="large-2 columns">
                                         <label>Update</label>
                                         <input type="submit" value="Update" class="nice tiny blue radius button">
                                     </div>                
                                 
-                                    <div class="large-4 columns">
+                                    <div class="large-2 columns">
                                         <label class="error">Delete</label>
                                         <a href="/Admin/Activity/Session/Delete/{{$session->id}}" class="nice tiny alert radius button">Delete</a>
                                     </div> 

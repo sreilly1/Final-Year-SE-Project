@@ -32,7 +32,13 @@
 
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
-            <li class="active"><a href="#">Modules</a></li>
+            <li class="active has-dropdown">
+                <a>Modules</a>
+                <ul class="dropdown">            
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Support Activities</a></li>
+                </ul>
+            </li>
         </ul>
 
       </section>
@@ -56,6 +62,15 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
             
 
             <div class="row">
@@ -86,7 +101,7 @@
 
 
                             <div class="row">
-                                <div class="large-12 medium-12 small-12 columns">
+                                <div class="large-12 medium-12 small-12 columns scroll">
                                     @if(Session::has('no_modules'))
                                         <div class="row">
                                             <div class="large-12 medium-12 small-12 columns">

@@ -71,7 +71,8 @@ class LecturerController extends Controller
 
 		} else {
 
-			return View::make("AccessProh");
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 	}
 
@@ -110,7 +111,8 @@ class LecturerController extends Controller
 
 	    }else{
 
-			return View::make("AccessProh");
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 	    }
 		
 	}
@@ -147,7 +149,8 @@ class LecturerController extends Controller
 
 		} else {
 
-			return View::make("AccessProh");
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 	}
 
@@ -172,7 +175,8 @@ class LecturerController extends Controller
 
 		} else {
 
-			return View::make("AccessProh");
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 	}
 
@@ -198,11 +202,8 @@ class LecturerController extends Controller
 
 	    }else{
 	  
-			$user = UserMod::where('id', $user_id)->first();
-			Session::flash('error', "Something went wrong, please try again!");
-			
-			return View::make("Lecturer-panel-modules-add")
-			->with('user', $user);
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 	    }
 	}
 
@@ -223,7 +224,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -234,15 +235,16 @@ class LecturerController extends Controller
 	public function ModuleAddActAction($user_id, $module_id)
 	{
 
-		$module_id = Input::get('module_id');
+		$module__id = Input::get('module_id');
 
-		if($module_id === $module_id and UserMod::where('id', $user_id)->where('role', '=', 'Lecturer')->exists() and Module::where('id', $module_id)->where('module_leader', $user_id)->exists()){
+		if($module_id === $module__id and UserMod::where('id', $user_id)->where('role', '=', 'Lecturer')->exists() and Module::where('id', $module_id)->where('module_leader', $user_id)->exists()){
 	        
-	        Module::create(array(
+	        Activity::create(array(
 				'module_id'=>Input::get('module_id'),
 				'title'=>Input::get('title'),
 				'role_type'=>Input::get('role_type'),
 				'quant_ppl_needed'=>Input::get('quant_ppl_needed'),
+				'description'=>Input::get('description'),
 			));
 
 			Session::flash('activity_success', "Activity was successfully created");
@@ -250,11 +252,8 @@ class LecturerController extends Controller
 
 	    }else{
 	  
-			$user = UserMod::where('id', $user_id)->first();
-			Session::flash('error', "Something went wrong, please try again!");
-			
-			return View::make("Lecturer-panel-modules-add")
-			->with('user', $user);
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 	    }
 	}
 
@@ -286,7 +285,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -308,7 +307,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -329,7 +328,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -350,6 +349,7 @@ class LecturerController extends Controller
 				'module_name' => $requests->input('module_name'),
 				'module_code' => $requests->input('module_code'),
 				'module_leader' => $requests->input('module_leader'),
+				'description' => $requests->input('description'),
 			);
 
 			$ch = Module::where('id', $module_id)->where('module_leader', $user_id)->update($data);
@@ -411,7 +411,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -434,7 +434,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -454,6 +454,7 @@ class LecturerController extends Controller
 				'title' => $requests->input('title'),
 				'role_type' => $requests->input('role_type'),
 				'quant_ppl_needed' => $requests->input('quant_ppl_needed'),
+				'description' => $requests->input('description'),
 			);
 
 			$ch = Activity::where('id', $act_id)->where('module_id', $module_id)->update($data);
@@ -495,7 +496,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -524,7 +525,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -537,12 +538,16 @@ class LecturerController extends Controller
 	{
 
 		$activity_id = Input::get('activity_id');
+		
+		$session_date = Input::get('date_of_session');
+		$session_db_date = date("Y-m-d", strtotime($session_date));
 
 		if(UserMod::where('id', $user_id)->where('role', '=', 'Lecturer')->exists() and Module::where('id', $module_id)->where('module_leader', $user_id)->exists() and Activity::where('id', $act_id)->where('module_id', $module_id)->exists() and $act_id === $activity_id){
 	        
 	        ActSession::create(array(
-				'activity_id'=>Input::get('activity_id'),
-				'date_of_session'=>Input::get('date_of_session'),
+	        	'activity_id'=>Input::get('activity_id'),
+				'title'=>Input::get('title'),
+				'date_of_session'=>$session_db_date,
 				'start_time'=>Input::get('start_time'),
 				'end_time'=>Input::get('end_time'),
 				'location'=>Input::get('location'),
@@ -553,7 +558,7 @@ class LecturerController extends Controller
 
 	    }else{
 	  
-			Session::flash('error', "Something went wrong, please try again!");			
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 	    }
 	}
@@ -596,7 +601,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -621,7 +626,7 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
+			Session::flash('failed', "Something went wrong, please try again!");
 			return back()->withInput();
 		}
 	}
@@ -642,6 +647,7 @@ class LecturerController extends Controller
 	        
 	        $data = array(
 				'date_of_session' =>$session_db_date,
+				'title' => $requests->input('title'),
 				'start_time' => $requests->input('start_time'),
 				'end_time' => $requests->input('end_time'),
 				'location' => $requests->input('location'),
@@ -707,6 +713,10 @@ class LecturerController extends Controller
 			$user = UserMod::where('id', $user_id)->where('role', '=', 'Lecturer')->first();
 			$users = PhDStudent::where('supervisor_id', $user_id)->with('user')->with('requests')->get();
 
+			foreach ($users as $student){
+				$requests = AddRequest::where('user_id', '=', $student->user_id)->where('supervisor_confirmation', '=', 'Pending')->where('status', '=', 'Pending')->with('activity')->with('phd')->get();
+			}
+
 			if(PhDStudent::where('supervisor_id', $user_id)->exists()){
 
 			} else {
@@ -715,11 +725,13 @@ class LecturerController extends Controller
 
 			return View::make("Lecturer-panel-supervision")
 			->with('users', $users)
-			->with('user', $user);
+			->with('user', $user)
+			->with('requests', $requests);
 
 		} else {
 
-			return View::make("AccessProh");
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 	}
 
@@ -729,18 +741,18 @@ class LecturerController extends Controller
 	{
 		if(UserMod::where('id', $user_id)->where('role', '=', 'Lecturer')->exists()){
 			$user = UserMod::where('id', $user_id)->where('role', '=', 'Lecturer')->first();
-			$requests = AddRequest::where('supervisor_confirmation', '=', 'Pending')->where('status', '=', 'Pending')->with('activity')->with('phd')->get();
-			if(AddRequest::where('supervisor_confirmation', '=', 'Pending')->where('status', '=', 'Pending')->with('activity')->with('phd')->exists()){
-			} else {
-				Session::flash('no_requests', "This student does not have any applications requested");
+			$students = PhDStudent::where('supervisor_id', $user_id)->get();
+
+			foreach ($students as $student){
+				$requests = AddRequest::where('user_id', '=', $student->user_id)->where('supervisor_confirmation', '=', 'Pending')->where('status', '=', 'Pending')->with('activity')->with('phd')->get();
 			}
 			return View::make("Lecturer-panel-supervision-requests")
 			->with('user', $user)
 			->with('requests', $requests);
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
-			return redirect('Lecturer');
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 	}
 
@@ -784,8 +796,8 @@ class LecturerController extends Controller
 
 		} else {
 
-			Session::flash('error_page', "Page you're trying to access does not exists");
-			return redirect('Lecturer');
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 	}
 	
@@ -814,7 +826,7 @@ class LecturerController extends Controller
 
 			} else {
 
-				Session::flash('failed', "Failed!");
+				Session::flash('failed', "Something went wrong, please try again!");
 				return back()->withInput();
 			}
 
@@ -924,7 +936,7 @@ class LecturerController extends Controller
 	        
 		        
 		        $data = array(
-					'supervisor_comment' => '[Changed]  Reason:  '.$requests->input('reason').' -  No New Comment Given   -  Old Comment: '.$requests->$old_comment,
+					'supervisor_comment' => '[Changed]  Reason:  '.$requests->input('reason').' -  No New Comment Given'.$requests->$old_comment,
 					'supervisor_confirmation' => $requests->input('supervisor_confirmation') ,
 				);
 
@@ -953,7 +965,7 @@ class LecturerController extends Controller
 	        
 		        
 		        $data = array(
-					'supervisor_comment' => '[Changed]  Reason: NOT GIVEN -  No New Comment Given   -  Old Comment: '.$requests->$old_comment,
+					'supervisor_comment' => '[Changed]  Reason: NOT GIVEN -  No New Comment Given'.$requests->$old_comment,
 					'supervisor_confirmation' => $requests->input('supervisor_confirmation') ,
 				);
 
@@ -1063,7 +1075,7 @@ class LecturerController extends Controller
 	        
 		        
 		        $data = array(
-					'supervisor_comment' => '[Changed]  Reason:  '.$requests->input('reason').' -  No New Comment Given   -  Old Comment: '.$requests->$old_comment,
+					'supervisor_comment' => '[Changed]  Reason:  '.$requests->input('reason').' -  No New Comment Given'.$requests->$old_comment,
 					'supervisor_confirmation' => $requests->input('supervisor_confirmation') ,
 				);
 
@@ -1092,7 +1104,7 @@ class LecturerController extends Controller
 	        
 		        
 		        $data = array(
-					'supervisor_comment' => '[Changed]  Reason: NOT GIVEN -  No New Comment Given   -  Old Comment: '.$requests->$old_comment,
+					'supervisor_comment' => '[Changed]  Reason: NOT GIVEN -  No New Comment Given',
 					'supervisor_confirmation' => $requests->input('supervisor_confirmation') ,
 				);
 

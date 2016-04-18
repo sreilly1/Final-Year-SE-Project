@@ -84,7 +84,7 @@
                     <fieldset class="bio">
 
                         <legend class="legend">Module Information</legend>
-                            <form action="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Modify/Action" role="form" method="post">
+                            <form action="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Modify/Action" role="form" method="post" id="editModule">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="module_leader" value="{{$user->id}}">
                                 <div class="large-6 columns">
@@ -95,13 +95,15 @@
                                     <label>Module Code</label>
                                     <input type="text" name="module_code" value="{{$module->module_code}}" />
                                 </div>
-                                <div class="large-2 columns">
+                                <div class="large-11 columns">
+                                    <label>Module Description
+                                        <textarea name="description" value="{{$module->description}}" form="editModule" style="resize: none; min-height:100px;">{{$module->description}}</textarea>
+                                    </label>
+                                </div>
+                                <div class="large-1 columns">
+                                    <label>Update</label>
                                     <input type="submit" value="update" class="nice tiny blue radius button">
                                 </div>                
-                            
-                                <div class="large-2 columns">
-                                    <a href="#" class="nice tiny alert radius button">Delete</a>
-                                </div> 
                             </form>
                     </fieldset>
                 </div>
@@ -133,6 +135,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

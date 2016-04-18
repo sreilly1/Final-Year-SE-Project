@@ -75,15 +75,15 @@
                     <dl class="accordion" data-accordion>
                       <dd class="accordion-navigation">
                         @foreach($requests as $request)
-                            <a href="#act-{{$request->activity->id}}"><label>Support Activity Title:</label> <h5>{{$request->activity->title}}</h5></a>
+                            <a href="#act-{{$request->activity->id}}"><label>Support Activity Title:</label> <h5>{{$request->activity->title}}</h5> <small>Module: <strong>{{$request->activity->module->module_code}} {{$request->activity->module->module_name}}</strong></small></a>
                             <div id="act-{{$request->activity->id}}" class="content">
                                     <table>
                                         <thead>
                                             <tr>
+                                                <th>Title</th>
                                                 <th>Date</th>
                                                 <th>Time</th>                                                    
                                                 <th>Location</th>
-                                                <th>Module Name</th>
                                                 <th>Instructor/s</th>
                                                 <th>Add to Calendar</th>
                                             </tr>
@@ -91,10 +91,10 @@
                                         <tbody> 
                                             @foreach($request->activity->events as $session)
                                                 <tr>
+                                                    <td>{{$session->title}}</td>
                                                     <td>{{date("d-m-Y", strtotime($session->date_of_session))}}</td>
                                                     <td>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td>
                                                     <td>{{$session->location}}</td>
-                                                    <td>{{$session->activity->module->module_code}} {{$session->activity->module->module_name}}</td>
                                                     <td><a data-reveal-id="usr-{{$session->activity->module->user->id}}"><label style="color:#5F9EA0;">{{$session->activity->module->user->title}}. {{$session->activity->module->user->name}}</label></a>
                                                         <div id="usr-{{$session->activity->module->user->id}}" class="reveal-modal large" data-reveal>
                                                             <h3>Supervisor Details</h3>

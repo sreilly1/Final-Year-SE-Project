@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ActSession extends Model{
 
 	protected $table = 'sessions';
-	protected $fillable =  ['activity_id', 'date_of_session', 'start_time', 'end_time', 'location']; 
+	protected $fillable =  ['title', 'activity_id', 'date_of_session', 'start_time', 'end_time', 'location']; 
 
     public function activity()
     {

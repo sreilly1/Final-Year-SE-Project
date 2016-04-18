@@ -38,8 +38,8 @@
             <li><a href="/Lecturer/{{$user->id}}/Modules">Modules</a></li>
             <li><a href="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}">{{$module->module_name}}</a></li>
             <li><a href="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}">{{$activity->title}}</a></li>
-            <li><a href="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}/Ses{{$session->id}}">Session: #{{$session->id}}</a></li>
-            <li class="active"><a href="#">Edit: Session #{{$session->id}}</a></li>
+            <li><a href="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}/Ses{{$session->id}}">Session: {{$session->title}}</a></li>
+            <li class="active"><a href="#">Edit</a></li>
         </ul>
 
       </section>
@@ -47,7 +47,7 @@
 
     <header>
 
-        <h2 class="welcome_text">Edit: {{$activity->title}}'s Session #{{$session->id}}</h2>
+        <h2 class="welcome_text">Edit: {{$activity->title}}'s Session ID#{{$session->id}}</h2>
     </header>
 
     <!-- ######################## Section ######################## -->
@@ -90,21 +90,25 @@
                             <form action="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}/Ses{{$session->id}}/Modify/Action" role="form" method="post">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
-                                    <div class="large-3 columns">
+                                    <div class="large-4 columns">
+                                        <label>Session Title:</label>
+                                        <input type="text" name="title" value="{{$session->title}}"/>
+                                    </div>
+                                    <div class="large-4 columns">
                                         <label>Date</label>
                                         <input type="text" name="date_of_session" value="{{$session->date_of_session}}" id="dp">
                                     </div>
-                                    <div class="large-3 columns">
+                                    <div class="large-4 columns">
+                                        <label>Session Location</label>
+                                        <input type="text" name="location" value="{{$session->location}}"/>
+                                    </div>
+                                    <div class="large-4 columns">
                                     <label>Session Start Time</label>
                                         <input type="text" name="start_time" value="{{date("H:i", strtotime($session->start_time))}}"/>
                                     </div>
-                                    <div class="large-3 columns">
+                                    <div class="large-4 columns">
                                         <label>Session End Time</label>
                                         <input type="text" name="end_time" value="{{date("H:i", strtotime($session->end_time))}}"/>
-                                    </div>
-                                    <div class="large-3 columns">
-                                        <label>Session Location</label>
-                                        <input type="text" name="location" value="{{$session->location}}"/>
                                     </div>
 
                                     <div class="large-2 columns">
@@ -150,6 +154,8 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation-datepicker.js') }}"></script>
+        <script src="{{ asset('js/locales/foundation-datepicker.vi.js') }}"></script>
         <script>
                     $(function () {
 

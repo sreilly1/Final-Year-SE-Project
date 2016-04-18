@@ -55,6 +55,17 @@
                 <section class="section_light">
 
                     <div style="width:100%;"> <!-- Main Div -->
+
+                        @if(Session::has('failed'))
+                            <div class="large-12 medium-12 small-12 columns">
+                                <div data-alert class="alert-box alert" align="center">
+                                    {{ Session::get('failed') }}
+                                    <a href="#" class="close">&times;</a>
+                                </div>
+                            </div>
+                        @endif
+
+                        
                         <div class="row">
                             <div class="large-12 medium-12 small-12 columns">
                                 <a href="/Admin/{{$user->id}}/Users/Create/Admin" target="_blank"><span class="label_secondary" style="margin-bottom: 10px;">Add Admin</span></a>

@@ -31,19 +31,52 @@
           </li>
         </ul>
 
+        @if($session->activity->module->module_leader === null)
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
             <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
-            <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Sessions</a></li>
-            <li class="active"><a href="#">View: Session #{{$session->id}}</a></li>
+            <li><a href="/Admin/{{$user->id}}/Activities/{{$session->activity->id}}">{{$session->activity->title}}</a></li>
+            <li>
+                <a href="#">
+                @if($session->title === '')
+                    Title missing for Session# {{$session->id}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @else
+                    {{$session->title}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @endif
+                </a>
+            </li>
         </ul>
+        @else
+        <ul class="left">
+            <li><a href="/Admin/{{$user->id}}">Main</a></li>
+            <li class="has-dropdown">
+                <a>- Take to -</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
+            <li><a href="/Admin/{{$user->id}}/Modules/{{$session->activity->module->id}}">{{$session->activity->module->module_name}}</a></li>
+            <li><a href="/Admin/{{$user->id}}/Activities/{{$session->activity->id}}">{{$session->activity->title}}</a></li>
+            <li class="active">
+                <a href="#">
+                @if($session->title === '')
+                    Title missing for Session# {{$session->id}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @else
+                    {{$session->title}} - {{date("d-m-Y", strtotime($session->date_of_session))}}
+                @endif
+                </a>
+            </li>
+        </ul>
+        @endif
 
       </section>
     </nav>
 
     <header>
 
-        <h2 class="welcome_text">Session #{{$session->id}}</h2>
+        <h2 class="welcome_text">{{$session->title}} <small>{{date("d-m-Y", strtotime($session->date_of_session))}}</small></h2>
     </header>
 
     <!-- ######################## Section ######################## -->
@@ -84,8 +117,12 @@
                         </legend>
                             <div class="row">
                                 <div class="large-3 columns">
-                                    <small>Activity Title:</small>
-                                    <h6>{{$session->activity->title}}</h6>
+                                    <small>Session Title:</small>
+                                    @if($session->title === '')
+                                    <label><h6 style="color:red;">No title, please add title</h6></label>
+                                    @else
+                                    <h6>{{$session->title}}</h6>
+                                    @endif
                                 </div>
                                 <div class="large-3 columns">
                                     <small>Session Date:</small>
@@ -119,8 +156,16 @@
                                     <h6>{{$session->activity->role_type}}</h6>
                                 </div>
                                 <div class="large-2 columns">
-                                    <small>View Module's Details</small>
-                                    <h6><a href="/Admin/{{$user->id}}/Activities/{{$session->activity->id}}">View</a></h6>
+                                    <small>View Activity Page</small>
+                                    <h6><a href="/Admin/{{$user->id}}/Activities/{{$session->activity->id}}" >View</a></h6>
+                                </div>
+                                <div class="large-12 columns">
+                                    <small>Activity Description</small>
+                                    @if($session->activity->description === '')
+                                        <label class="error" align="center">This Activity has no description, please add description!</label>
+                                    @else
+                                        <textarea readonly="readonly" style="resize: none; min-height:100px;">{{$session->activity->description}}</textarea>
+                                    @endif
                                 </div>
                             </div>
                     </fieldset>
@@ -157,7 +202,19 @@
                                 @endif
                                 <div class="large-3 columns">
                                     <small>View Module's Details</small>
-                                    <h6><a href="/Admin/{{$user->id}}/Modules/{{$session->activity->module->id}}">View</a></h6>
+                                    <h6><a href="/Admin/{{$user->id}}/Modules/{{$session->activity->module->id}}" >View</a></h6>
+                                </div>
+                                <div class="large-12 columns">
+                                    <small>Module Description</small>
+                                    <div class="panel">
+                                        <h5><small>
+                                        @if($session->activity->module->description === '')
+                                            <label class="error" align="center">This module has no description, please add description!</label>
+                                        @else
+                                            <label>{{$session->activity->module->description}}</label>
+                                        @endif
+                                        </small></h5>
+                                    </div>
                                 </div>
                             </div>
                     </fieldset>
@@ -192,6 +249,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

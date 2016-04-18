@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model{
 
 	protected $table = 'activities';
-	protected $fillable =  ['id', 'title', 'role_type', 'module_id','quant_ppl_needed']; 
+	protected $fillable =  ['id', 'title', 'role_type', 'module_id','quant_ppl_needed', 'description']; 
 
     public function module()
     {

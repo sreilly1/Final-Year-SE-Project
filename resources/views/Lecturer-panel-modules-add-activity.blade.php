@@ -55,6 +55,17 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
+
+            
             <div class="row">
                 @if(Session::has('activity_success'))
                     <div class="large-12 medium-12 small-12 columns">
@@ -80,26 +91,33 @@
                             <div class="row">
                                 
                                 <div class="large-12 columns">
-                                    <form action="/Admin/Activities/Add/Action" role="form" method="post">
+                                    <form action="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Modify/addAct/Action" role="form" method="post" id="addAct">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="module_id" value="{{$module->id}}">
                                         <div class="row">
-                                            <div class="large-6 columns">
+                                            <div class="large-3 columns">
                                                 <label>Activity Title</label>
                                                 <input type="text" name="title" placeholder="Enter Activity Title"/>
                                             </div>
-                                            <div class="large-6 columns">
+                                            <div class="large-3 columns">
                                                 <label>Role Type</label>
                                                 <select name="role_type">
                                                     <option name="role_type" value="Demonstrator">Demonstrator</option>
                                                     <option name="role_type" value="Teaching">Teaching</option>
                                                 </select>
                                             </div>
-                                            <div class="large-6 columns">
+                                            <div class="large-3 columns">
+                                                <label>Number of applicants</label>
                                                 <input type="text" name="quant_ppl_needed" placeholder="How many applicants?"/>
                                             </div>
-                                            <div class="large-6 columns">
+                                            <div class="large-3 columns">
+                                                <label>Add!</label>
                                                 <input type="submit" value="add" class="button postfix">
+                                            </div>
+                                            <div class="large-12 columns">
+                                                <label>Activity Description
+                                                    <textarea name="description" form="addAct"></textarea>
+                                                </label>
                                             </div>
                                         </div>
                                     </form>    
@@ -143,6 +161,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

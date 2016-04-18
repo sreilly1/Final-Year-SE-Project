@@ -81,7 +81,7 @@
                             <div class="row">
                                 
                                 <div class="large-12 columns">
-                                    <form action="/Admin/{{$user->id}}/Modules/addMod" role="form" method="post">
+                                    <form action="/Admin/{{$user->id}}/Modules/addMod" role="form" method="post" id="addModule">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="row">
                                             <div class="large-4 columns">
@@ -100,6 +100,11 @@
                                                     <option name="module_leader" value="{{$staff->id}}">{{$staff->name}}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                            <div class="large-12 columns">
+                                                <label>Module Description
+                                                    <textarea name="description" form="addModule"></textarea>
+                                                </label>
                                             </div>
                                         </div>
                                         <input type="submit" value="add" class="button postfix">
@@ -144,6 +149,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

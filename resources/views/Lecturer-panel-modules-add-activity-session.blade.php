@@ -59,6 +59,15 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
+            
             <div class="row">
                 @if(Session::has('session_success'))
                     <div class="large-12 medium-12 small-12 columns">
@@ -97,23 +106,27 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="activity_id" value="{{$activity->id}}">
                                         <div class="row">
-                                            <div class="large-6 columns">
+                                            <div class="large-4 columns">
+                                                <label>Session Title</label>
+                                                <input type="text" name="title" placeholder="Please enter session title">
+                                            </div>
+                                            <div class="large-4 columns">
                                                 <label>Date</label>
                                                 <input type="text" name="date_of_session" id="dp">
                                             </div>
-                                            <div class="large-3 columns">
-                                                <label>Session Start Time</label>
-                                                <input type="text" name="start_time" placeholder="hh:mm"/>
-                                            </div>
-                                            <div class="large-3 columns">
-                                                <label>Session End Time</label>
-                                                <input type="text" name="end_time" placeholder="hh:mm"/>
-                                            </div>
-                                            <div class="large-6 columns">
+                                            <div class="large-4 columns">
                                                 <label>Location</label>
                                                 <input type="text" name="location" placeholder="E.g T2.09"/>
                                             </div>
-                                            <div class="large-6 columns">
+                                            <div class="large-4 columns">
+                                                <label>Session Start Time</label>
+                                                <input type="text" name="start_time" placeholder="hh:mm"/>
+                                            </div>
+                                            <div class="large-4 columns">
+                                                <label>Session End Time</label>
+                                                <input type="text" name="end_time" placeholder="hh:mm"/>
+                                            </div>
+                                            <div class="large-4 columns">
                                                 <label>Add Session</label>
                                                 <input type="submit" value="add" class="button postfix">
                                             </div>
@@ -159,56 +172,59 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
+        <script src="{{ asset('js/foundation-datepicker.js') }}"></script>
+        <script src="{{ asset('js/locales/foundation-datepicker.vi.js') }}"></script>
         <script>
-                    $(function () {
+            $(function () {
 
-                        $('#dp1').fdatepicker({
-                            format: 'mm-dd-yyyy hh:ii',
-                            disableDblClickSelection: true,
-                            language: 'vi',
-                            pickTime: true
-                        });
+                $('#dp1').fdatepicker({
+                    format: 'mm-dd-yyyy hh:ii',
+                    disableDblClickSelection: true,
+                    language: 'vi',
+                    pickTime: true
+                });
 
-                        $('#dp').fdatepicker({
-                            initialDate: '????-??-??',
-                            format: 'yyyy-mm-dd',
-                            disableDblClickSelection: true
-                        });
+                $('#dp').fdatepicker({
+                    initialDate: '????-??-??',
+                    format: 'dd-mm-yyyy',
+                    disableDblClickSelection: true
+                });
 
-                        $('#dpE').fdatepicker({
-                            format: 'yyyy-mm-dd',
-                            disableDblClickSelection: true
-                        });
+                $('#dpE').fdatepicker({
+                    format: 'yyyy-mm-dd',
+                    disableDblClickSelection: true
+                });
 
-                        
+                
 
 
 
-                        // implementation of disabled form fields
-                        var nowTemp = new Date();
-                        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-                        var checkin = $('#dpd1').fdatepicker({
-                            onRender: function (date) {
-                                return date.valueOf() < now.valueOf() ? 'disabled' : '';
-                            }
-                        }).on('changeDate', function (ev) {
-                            if (ev.date.valueOf() > checkout.date.valueOf()) {
-                                var newDate = new Date(ev.date)
-                                newDate.setDate(newDate.getDate() + 1);
-                                checkout.update(newDate);
-                            }
-                            checkin.hide();
-                            $('#dpd2')[0].focus();
-                        }).data('datepicker');
-                        var checkout = $('#dpd2').fdatepicker({
-                            onRender: function (date) {
-                                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-                            }
-                        }).on('changeDate', function (ev) {
-                            checkout.hide();
-                        }).data('datepicker');
-                    });
-        </script>
+                // implementation of disabled form fields
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+                var checkin = $('#dpd1').fdatepicker({
+                    onRender: function (date) {
+                        return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    if (ev.date.valueOf() > checkout.date.valueOf()) {
+                        var newDate = new Date(ev.date)
+                        newDate.setDate(newDate.getDate() + 1);
+                        checkout.update(newDate);
+                    }
+                    checkin.hide();
+                    $('#dpd2')[0].focus();
+                }).data('datepicker');
+                var checkout = $('#dpd2').fdatepicker({
+                    onRender: function (date) {
+                        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    checkout.hide();
+                }).data('datepicker');
+            });
+</script>
 <script>
     $(document).foundation();
 </script>

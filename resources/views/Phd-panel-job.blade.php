@@ -77,11 +77,11 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Title</th>
                                 <th>Date</th>
                                 <th>Time</th>                                                    
                                 <th>Location</th>
                                 <th>Activity Title</th>
-                                <th>Module Name</th>
                                 <th>Instructor/s</th>
                                 <th>Add to Calendar</th>
                             </tr>
@@ -90,11 +90,24 @@
                             @foreach($requests as $request)
                                 @foreach($request->sessions as $session)
                                 <tr>
+                                    <td>{{$session->title}}</td>
                                     <td>{{date("d-m-Y", strtotime($session->date_of_session))}}</td>
                                     <td>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td>
                                     <td>{{$session->location}}</td>
-                                    <td>{{$session->activity->title}}</td>
-                                    <td><label style="font-size: 85%;">{{$session->activity->module->module_code}} <strong>{{$session->activity->module->module_name}}</strong></label></td>
+                                    <td><a data-reveal-id="act-{{$session->activity->id}}"><label style="color:#5F9EA0; font-size: 90%;">{{$session->activity->title}}</label></a></td>
+                                    <div id="act-{{$session->activity->id}}" class="reveal-modal large" data-reveal>
+                                        <div class="row">
+                                            <div class="large-12 columns">
+                                                <small>Activity Title:</small>
+                                                <h5>{{$session->activity->title}}</h5>
+                                            </div>
+                                            <div class="large-12 columns">
+                                                <small>Module Code & Name:</small>
+                                                <h5>{{$session->activity->module->module_code}} <strong>{{$session->activity->module->module_name}}</strong></h5>
+                                            </div>
+                                        </div>
+                                        <a class="close-reveal-modal">&#215;</a>
+                                    </div>
                                     <td><a data-reveal-id="usr-{{$session->activity->module->user->id}}"><label style="color:#5F9EA0; font-size: 90%;">{{$session->activity->module->user->title}}. {{$session->activity->module->user->name}}</label></a>
                                         <div id="usr-{{$session->activity->module->user->id}}" class="reveal-modal large" data-reveal>
                                             <h3>Supervisor Details</h3>
@@ -152,10 +165,9 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Title</th>
                                 <th>Date</th>
-                                <th>Time</th>                                                    
-                                <th>Location</th>
-                                <th>Activity Title</th>
+                                <th>Full Details</th>
                                 <th>Add to Calendar</th>
                             </tr>
                         </thead>
@@ -163,11 +175,30 @@
                             @foreach($requests as $request)
                                 @foreach($request->sessions as $session)
                                 <tr>
+                                    <td style="font-size: 82%;">{{$session->title}}</td>
                                     <td style="font-size: 82%;">{{date("d-m-Y", strtotime($session->date_of_session))}}</td>
-                                    <td style="font-size: 82%;">{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td>
-                                    <td style="font-size: 82%;">{{$session->location}}</td>
-                                    <td><a data-reveal-id="act-{{$session->activity->id}}"><label style="color:#5F9EA0; font-size: 82%;">{{$session->activity->title}}</label></a></td>                                    
-                                        <div id="act-{{$session->activity->id}}" class="reveal-modal large" data-reveal>
+                                    <td><a data-reveal-id="act-med-{{$session->id}}"><label style="color:#5F9EA0; font-size: 82%;">View</label></a></td>                                    
+                                        <div id="act-med-{{$session->id}}" class="reveal-modal large" data-reveal>
+                                            <h4>Session Details</h4>
+                                            <div class="row">
+                                                <div class="large-12 columns">
+                                                    <small>Session Title</small>
+                                                    <h5>{{$session->title}}</h5>
+                                                </div>
+                                                <div class="large-12 columns">
+                                                    <small>Session Date</small>
+                                                    <h5>{{date("d-m-Y", strtotime($session->date_of_session))}}</h5>
+                                                </div>
+                                                <div class="large-12 columns">
+                                                    <small>Session Time</small>
+                                                    <h5>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</h5>
+                                                </div>    
+                                                <div class="large-12 columns">
+                                                    <small>Session Location</small>
+                                                    <h5>{{$session->location}}</h5>
+                                                </div>                                                
+                                            </div>
+                                            <hr>
                                             <h4>Activity Details</h4>
                                             <div class="row">
                                                 <div class="large-6 columns">
@@ -225,7 +256,7 @@
                                                 <var class="atc_date_start">{{$session->date_of_session}} {{$session->start_time}}</var>
                                                 <var class="atc_date_end">{{$session->date_of_session}} {{$session->end_time}}</var>
                                                 <var class="atc_timezone">Europe/London</var>
-                                                <var class="atc_title">{{$session->activity->module->module_code}} {{$session->activity->module->module_name}}</var>
+                                                <var class="atc_title">{{$session->title}}</var>
                                                 <var class="atc_description">Activity: {{$session->activity->title}}, Instructor: {{$session->activity->module->user->title}}. {{$session->activity->module->user->name}}</var>
                                                 <var class="atc_location">{{$session->location}}</var>
                                                 <var class="atc_organizer">Helen Phillips</var>
@@ -247,7 +278,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Session Activity Title</th>
+                                <th>Session Title</th>
                                 <th>Add to Calendar</th>
                             </tr>
                         </thead>
@@ -255,7 +286,13 @@
                             @foreach($requests as $request)
                                 @foreach($request->sessions as $session)
                                 <tr>
-                                    <td><a data-reveal-id="sess-{{$session->id}}"><label style="color:#5F9EA0; font-size: 82%;">{{$session->activity->title}}</label></a></td>                                    
+                                    <td><a data-reveal-id="sess-{{$session->id}}"><label style="color:#5F9EA0; font-size: 82%;">
+                                        @if($session->title === '')
+                                            No Title
+                                        @else    
+                                            <strong>{{$session->title}}</strong>
+                                        @endif
+                                    </label></a></td>                                    
                                         <div id="sess-{{$session->id}}" class="reveal-modal large" data-reveal>
                                             <h4>Session Details</h4>
                                             <div class="row">
@@ -391,6 +428,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

@@ -9,7 +9,7 @@ class Module extends Model
 
 
 	protected $table = 'modules';
-	protected $fillable =  ['module_name', 'module_code', 'module_leader'];
+	protected $fillable =  ['id', 'module_name', 'module_code', 'module_leader', 'description'];
 
     public function activities()
     {

@@ -102,7 +102,8 @@ class PhdController extends Controller
 			}
 	    }else{
 
-			return View::make("AccessProh");
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 	    }	
 	}
 
@@ -156,16 +157,18 @@ class PhdController extends Controller
 			   		return back()->withInput();
 			} else {
 
+				$supervisor_id = Input::get('supervisor');
+
+				$supervisor = UserMod::where('id', $supervisor_id)->where('role', '=', 'Lecturer')->first();
 
 				$activity_id = Input::get('activity_id');
-				$supervisor_mail = Input::get('supervisor');
 				$activity = Activity::where('id', $activity_id)->with('module')->first();
-				$messageSubject = 'Application Requested';
+				$messageSubject = '[No reply] Application Requested';
 				$user = UserMod::where('id', $user_id)->where('role', '=', 'PHD Student')->first();
 				$student_name = $user->name;
 				$student_email = $user->email;
 				$activity_title = $activity->title;
-				$activity_module = $activity->module->module_name;
+				$activity_module = $activity->module->module_code.' '.$activity->module->module_name;
 
 				AddRequest::create(array(
 					'activity_id'=>Input::get('activity_id'),
@@ -173,10 +176,22 @@ class PhdController extends Controller
 					'status'=>Input::get('status'),
 				));
 
+				$supervisor_name = $supervisor->title.'. '.$supervisor->name;
+				$supervisor_email = $supervisor->email;
+
+				// Sending Email to PhD Student when requesting job
 				$data = array('name'=>$student_name, 'Recemail'=>$student_email, 'activity_title'=>$activity_title, 'activity_module'=>$activity_module);
-			    Mail::send('applicationRequest', $data, function($message) use ($student_email, $student_name, $messageSubject)
+			    Mail::send('PhdApplicationRequest', $data, function($message) use ($student_email, $student_name, $messageSubject)
 			    {   
 			        $message->to($student_email, $student_name)->subject($messageSubject);
+			    });
+
+
+			    // Sending Email to Supervisor for confirmation
+				$sup_mail = array('name'=>$supervisor_name, 'Recemail'=>$supervisor_email, 'student_name'=>$student_name, 'activity_title'=>$activity_title, 'activity_module'=>$activity_module);
+			    Mail::send('LecturerApplicationRequest', $sup_mail, function($message) use ($supervisor_email, $supervisor_email, $messageSubject)
+			    {   
+			        $message->to($supervisor_email, $supervisor_email)->subject($messageSubject);
 			    });
 
 				Session::flash('message', "Request was successfully sent!, an email was sent to you showing your application's details");

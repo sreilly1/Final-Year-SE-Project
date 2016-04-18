@@ -216,7 +216,11 @@
                                                 <td><span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Confirmation still not received from: {{$not->phd->supervisor->title}}. {{$not->phd->supervisor->name}}">{{$not->supervisor_confirmation}}</span></td>
                                             @else
                                                 @if($not->supervisor_comment === '')
+                                                    @if($not->supervisor_confirmation === 'Confirmed')
                                                     <td><label class="green">{{$not->supervisor_confirmation}} -  No Comment </label></td>
+                                                    @else
+                                                    <td><label class="error">{{$not->supervisor_confirmation}} -  No Comment </label></td>
+                                                    @endif
                                                 @else
                                                     @if($not->supervisor_confirmation === 'Confirmed')
                                                     <td><a href="#" data-reveal-id="viewCmnt-{{$not->id}}"><label class="green">{{$not->supervisor_confirmation}} - View Comment</label></a></td>
@@ -290,6 +294,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

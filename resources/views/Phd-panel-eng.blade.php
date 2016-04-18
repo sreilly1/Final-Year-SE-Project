@@ -54,6 +54,16 @@
     <section class="section_light">
 
         <div style="width:100%;"> <!-- Main Div -->
+
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
+            
             <div class="row">
                 <div class="large-12 medium-12 small-12 columns">
                     @if(Session::has('ErrMessage'))
@@ -80,9 +90,8 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <td>Module Code</td>
-                                        <td>Module Name</td>
-                                        <th>Available Support Activities</th>
+                                        <td>Code & Module Title</td>
+                                        <th>Available Jobs  -  <strong data-tooltip aria-haspopup="true" class="has-tip tip-top" title="View all available jobs of the module stated">?</strong></th>
 
                                     </tr>
                                 </thead>
@@ -90,17 +99,29 @@
                                     @foreach($module as $module)
                                         @if (App\Activity::where('module_id', $module->id)->exists())
                                             <tr>
-                                                <td>{{$module->module_code}}</td>
-                                                <td>{{$module->module_name}}</td>
+                                                @if($module->description === '')
+                                                <td><label data-tooltip aria-haspopup="true" class="tip-top" title="Unfortunately this module has no description, please contact system coordinator to get further details.">{{$module->module_code}} - {{$module->module_name}}</label></td>
+                                                @else
+                                                <td><label>{{$module->module_code}} - {{$module->module_name}}  -  <strong data-reveal-id="ModDesc-{{$module->id}}" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Click here to view module's description">?</strong></label></td>
+                                                @endif
                                                 <td><a href="/Phd/{{$user->id}}/Engagement-Form/Mod-{{$module->id}}">View</a></td>
                                             </tr>
                                         @else
                                             <tr>
-                                                <td>{{$module->module_code}}</td>
-                                                <td>{{$module->module_name}}</td>
-                                                <td><label class="error" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="This module is not available at the moment">Not Available</label></td>
+                                                <td><label class="error" data-tooltip aria-haspopup="true" class="tip-top" title="This module is not available at the moment, Sorry!">{{$module->module_code}} - {{$module->module_name}}</label></td>
+                                                <td><label class="error" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="This module is not available at the moment, Sorry!">Not Available</label></td>
                                             </tr>
                                         @endif
+                                        <div id="ModDesc-{{$module->id}}" class="reveal-modal xlarge" data-reveal>
+                                            <h3>Description of {{$module->module_name}}</h3>
+                                            <!-- Social Dialogue Section -->
+                                            <div class="row">
+                                                <div class="large-12 columns">
+                                                    <textarea readonly="readonly" style="resize: none; min-height:150px;">{{$module->description}}</textarea>
+                                                </div>
+                                            </div>
+                                            <a class="close-reveal-modal">&#215;</a>
+                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -141,6 +162,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

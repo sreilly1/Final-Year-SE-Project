@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>foundation on laravel</title>
+    <link rel="stylesheet" href="{{ asset('css/foundation-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     <script src="{{ asset('js/modernizr.js') }}"> </script>
@@ -31,11 +32,27 @@
           </li>
         </ul>
 
+        @if($activity->module_id === null)
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
             <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
             <li class="active"><a href="#">{{$activity->title}}</a></li>
         </ul>
+        @else
+        <ul class="left">
+            <li><a href="/Admin/{{$user->id}}">Main</a></li>
+            <li class="has-dropdown">
+                <a>- Take to -</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
+            <li><a href="/Admin/{{$user->id}}/Modules/{{$activity->module->id}}">{{$activity->module->module_name}}</a></li>
+            <li class="active"><a href="#">{{$activity->title}}</a></li>
+        </ul>
+        @endif
 
       </section>
     </nav>
@@ -70,6 +87,14 @@
                         <a href="#" class="close">&times;</a>
                     </div>
                     @endif
+                    @if(Session::has('session_success'))
+                        <div class="large-12 medium-12 small-12 columns">
+                            <div data-alert class="alert-box success" align="center">
+                                {{ Session::get('session_success') }}
+                                <a href="#" class="close">&times;</a>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="large-12 medium-12 small-12 columns">
 
@@ -103,6 +128,14 @@
                                 <div class="large-2 columns">
                                     <small>Edit Support Activity</small>
                                     <h6><a href="/Admin/{{$user->id}}/Activities/Modify/{{$activity->id}}">Edit</a></h6>
+                                </div>
+                                <div class="large-12 columns">
+                                    <small>Activity Description</small>
+                                    @if($activity->description === '')
+                                        <label class="error" align="center">This Activity has no description, please add description!</label>
+                                    @else
+                                        <textarea readonly="readonly" style="resize: none; min-height:100px;">{{$activity->description}}</textarea>
+                                    @endif
                                 </div>
                             </div>
                     </fieldset>
@@ -146,7 +179,19 @@
                                 @endif
                                 <div class="large-3 columns">
                                     <small>View Module's Details</small>
-                                    <h6><a href="/Admin/{{$user->id}}/Modules/{{$activity->module->id}}" target="_blank">View</a></h6>
+                                    <h6><a href="/Admin/{{$user->id}}/Modules/{{$activity->module->id}}" >View</a></h6>
+                                </div>
+                                <div class="large-12 columns">
+                                    <small>Module Description</small>
+                                    <div class="panel">
+                                        <h5><small>
+                                        @if($activity->module->description === '')
+                                            <label class="error" align="center">This module has no description, please add description!</label>
+                                        @else
+                                            <label>{{$activity->module->description}}</label>
+                                        @endif
+                                        </small></h5>
+                                    </div>
                                 </div>
                             </div>
                         @endif        
@@ -158,7 +203,12 @@
 
                     <fieldset class="bio">
 
-                        <legend class="legend">Support Activity Sessions</legend>
+                        <legend class="legend">
+                            <ul class="inline-list">
+                              <li>Support Activity Sessions</li>
+                              <li><a data-reveal-id="AddSession"><label>Add</label></a></li>
+                            </ul>
+                        </legend>
                         <div class="row">
                             <div class="large-12 medium-12 small-12 columns">
                                 <div data-alert class="alert-box alert" align="center">
@@ -174,7 +224,12 @@
                 <div class="large-12 medium-12 small-12 columns">
 
                     <fieldset class="bio">
-                        <legend class="legend">Support Activity Sessions</legend>
+                        <legend class="legend">
+                            <ul class="inline-list">
+                              <li>Support Activity Sessions</li>
+                              <li><a data-reveal-id="AddSession"><label>Add</label></a></li>
+                            </ul>
+                        </legend>
                         <table>
                             <thead>
                                 <tr>
@@ -188,17 +243,56 @@
                             <tbody>
                                 @foreach($sessions as $session)
                                     <tr>
-                                        <td>{{$session->id}}</td>
+                                        <td>{{$session->title}}</td>
                                         <td>{{date("d-m-Y", strtotime($session->date_of_session))}}</td>      
                                         <td>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td>
                                         <td>{{$session->location}}</td>                                                                                                
-                                        <td><a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}" target="_blank">View</a>
+                                        <td><a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}" >View</a>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </fieldset>
                 </div>
+
+
+                <!-- Add session pop up window -->
+                <div id="AddSession" class="reveal-modal xlarge" data-reveal>
+                    <h3>Add Session</h3>                    
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <form action="/Admin/{{$user->id}}/Activities/Sessions/Add/Action" role="form" method="post">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="activity_id" value="{{$activity->id}}">
+                                <div class="row">
+                                    <div class="large-6 columns">
+                                        <label>Date</label>
+                                        <input type="text" name="date_of_session" id="dp">
+                                    </div>
+                                    <div class="large-6 columns">
+                                        <label>Session Location</label>
+                                        <input type="text" name="location" placeholder="E.g T2.09"/>
+                                    </div>
+                                    <div class="large-4 columns">
+                                        <label>Session Starting Time</label>
+                                        <input type="text" name="start_time" placeholder="hh:mm"/>
+                                    </div>
+                                    <div class="large-4 columns">
+                                        <label>Session Ending Time</label>
+                                        <input type="text" name="end_time" placeholder="hh:mm"/>
+                                    </div>
+                                    <div class="large-4 columns">
+                                        <label class="green">Confirm & Add</label>
+                                        <input type="submit" value="add" class="button postfix">
+                                    </div>
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+                    <a class="close-reveal-modal">&#215;</a>
+                </div>
+                <!-- Add session pop up window ends -->
+
 
                 <div class="large-12 medium-12 small-12 columns">
                     <fieldset class="bio">
@@ -315,9 +409,62 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
-<script>
-    $(document).foundation();
-</script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
+        <script src="{{ asset('js/foundation-datepicker.js') }}"></script>
+        <script src="{{ asset('js/locales/foundation-datepicker.vi.js') }}"></script>
+        <script>
+            $(function () {
+
+                $('#dp1').fdatepicker({
+                    format: 'mm-dd-yyyy hh:ii',
+                    disableDblClickSelection: true,
+                    language: 'vi',
+                    pickTime: true
+                });
+
+                $('#dp').fdatepicker({
+                    initialDate: '????-??-??',
+                    format: 'dd-mm-yyyy',
+                    disableDblClickSelection: true
+                });
+
+                $('#dpE').fdatepicker({
+                    format: 'yyyy-mm-dd',
+                    disableDblClickSelection: true
+                });
+
+                
+
+
+
+                // implementation of disabled form fields
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+                var checkin = $('#dpd1').fdatepicker({
+                    onRender: function (date) {
+                        return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    if (ev.date.valueOf() > checkout.date.valueOf()) {
+                        var newDate = new Date(ev.date)
+                        newDate.setDate(newDate.getDate() + 1);
+                        checkout.update(newDate);
+                    }
+                    checkin.hide();
+                    $('#dpd2')[0].focus();
+                }).data('datepicker');
+                var checkout = $('#dpd2').fdatepicker({
+                    onRender: function (date) {
+                        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    checkout.hide();
+                }).data('datepicker');
+            });
+        </script>
+        <script>
+            $(document).foundation();
+        </script>
 
 </body>
 </html>

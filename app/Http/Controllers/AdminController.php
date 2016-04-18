@@ -38,7 +38,6 @@ class AdminController extends Controller
 
 
 
-
 	// Panel
 
 
@@ -1160,6 +1159,7 @@ class AdminController extends Controller
 					'module_name'=>Input::get('module_name'),
 					'module_code'=>Input::get('module_code'),
 					'module_leader'=>null,
+					'description'=>Input::get('description'),
 				));
 				Session::flash('success', "Module was successfully created");
 				Session::flash('no_leader', "This Module has no Module Leader, It would be better to assign module leader!");
@@ -1169,7 +1169,8 @@ class AdminController extends Controller
 		    	Module::create(array(
 					'module_name'=>Input::get('module_name'),
 					'module_code'=>Input::get('module_code'),
-					'module_leader'=>Input::get('module_leader')
+					'module_leader'=>Input::get('module_leader'),
+					'description'=>Input::get('description'),
 				));
 
 				Session::flash('success', "Module was successfully created");
@@ -1194,6 +1195,7 @@ class AdminController extends Controller
 					'module_name' => $requests->input('module_name'),
 					'module_code' => $requests->input('module_code'),
 					'module_leader' =>null,
+					'description' => $requests->input('description'),
 				);
 				$ch = DB::table('modules')->where('id', $id)->update($data);
 				if($ch > 0)
@@ -1208,6 +1210,7 @@ class AdminController extends Controller
 					'module_name' => $requests->input('module_name'),
 					'module_code' => $requests->input('module_code'),
 					'module_leader' => $requests->input('module_leader'),
+					'description' => $requests->input('description'),
 				);
 				$ch = DB::table('modules')->where('id', $id)->update($data);
 				if($ch > 0)
@@ -1294,7 +1297,7 @@ class AdminController extends Controller
 
 			} elseif ($id === 'Sessions'){
 
-				$sessions = ActSession::with('activity')->get();
+				$sessions = ActSession::with('activity')->orderBy('date_of_session', 'asc')->get();
 
 				if(ActSession::exists()){
 
@@ -1336,8 +1339,8 @@ class AdminController extends Controller
 
 
 				} else {
-					Session::flash('no_activities', "You're trying to access page that does not exists");
-					return View::make("Admin-activities-view");
+					Session::flash('failed', "Something went wrong, please try again!");
+					return back()->withInput();
 				}	
 			}
 		} else {
@@ -1360,6 +1363,7 @@ class AdminController extends Controller
 					'role_type'=>Input::get('role_type'),
 					'module_id'=>null,
 					'quant_ppl_needed'=>Input::get('quant_ppl_needed'),
+					'description' => Input::get('description'),
 				));
 				Session::flash('activity_success', "Activity was successfully created");
 				return back()->withInput();
@@ -1369,6 +1373,7 @@ class AdminController extends Controller
 					'role_type'=>Input::get('role_type'),
 					'module_id'=>Input::get('module_id'),
 					'quant_ppl_needed'=>Input::get('quant_ppl_needed'),
+					'description' => Input::get('description'),
 				));
 				Session::flash('activity_success', "Activity was successfully created");
 				return back()->withInput();
@@ -1424,6 +1429,7 @@ class AdminController extends Controller
 					'role_type' => $requests->input('role_type'),
 					'module_id' =>null,
 					'quant_ppl_needed' => $requests->input('quant_ppl_needed'),
+					'description' => $requests->input('description'),
 				);
 				$ch = Activity::where('id', $id)->update($data);
 				if($ch > 0)
@@ -1439,6 +1445,7 @@ class AdminController extends Controller
 					'role_type' => $requests->input('role_type'),
 					'module_id' => $requests->input('module_id'),
 					'quant_ppl_needed' => $requests->input('quant_ppl_needed'),
+					'description' => $requests->input('description'),
 				);
 				$ch = Activity::where('id', $id)->update($data);
 				if($ch > 0)
@@ -1523,6 +1530,7 @@ class AdminController extends Controller
 			$session_db_date = date("Y-m-d", strtotime($session_date));
 
 			ActSession::create(array(
+				'title'=>Input::get('title'),
 				'activity_id'=>Input::get('activity_id'),
 				'date_of_session'=>$session_db_date,
 				'start_time'=>Input::get('start_time'),
@@ -1576,10 +1584,12 @@ class AdminController extends Controller
 		if(UserMod::where('id', $user_id)->where('role', '=', 'Administrator')->exists()){
 
 			$data = array(
+				'title' => $requests->input('title'),
 				'date_of_session'=>$session_db_date,
 				'start_time' => $requests->input('start_time'),
 				'end_time' => $requests->input('end_time'),
 				'location' => $requests->input('location'),
+				'title' => $requests->input('title'),
 				);
 
 			$ch = ActSession::where('id', $id)->update($data);
@@ -1786,11 +1796,34 @@ class AdminController extends Controller
 		
 		if(UserMod::where('id', $user_id)->where('role', '=', 'Administrator')->exists() and AddRequest::where('id', $req_id)->where('status', '=', 'Pending')->exists()){
 			
+			// Getting request details
+			$request = AddRequest::where('id', $req_id)->with('activity')->first();
+			$request_id = $request->id;
+			$activity_title = $request->activity->title;
+			$activity_module = $request->activity->module->module_code.' '.$request->activity->module->module_name;
+
 			$data = array(
 				'status' => $requests->input('status'),
 			);
 
 			$ch = AddRequest::where('id', $req_id)->update($data);
+
+			// Getting student details
+			$student = UserMod::where('id', '=',$request->user->id)->first();
+			$student_name = $student->name;
+			$student_email = $student->email;
+
+			// Subject of the notifying email:
+			$messageSubject = '[No reply] Update: Support Activity Ref#'.$request_id;
+
+
+
+			// Sending Email to PhD Student when requesting job
+			$data = array('name'=>$student_name, 'Recemail'=>$student_email, 'activity_title'=>$activity_title, 'activity_module'=>$activity_module, 'request_id'=>$request_id);
+			Mail::send('PhdApplicationRequestAccepted', $data, function($message) use ($student_email, $student_name, $messageSubject)
+			{   
+			    $message->to($student_email, $student_name)->subject($messageSubject);
+			});
 
 			Session::flash('success', "Confirmation was successfully done, User can now view all sessions on his/her panel");
 			return redirect('Admin/'.$user_id.'/Requests');
@@ -1817,7 +1850,31 @@ class AdminController extends Controller
 
 			$ch = AddRequest::where('id', $req_id)->update($data);
 
-			Session::flash('success', "Rejection was successfully done, User will receieve notifying that");
+			// Getting request details
+			$request = AddRequest::where('id', $req_id)->with('activity')->first();
+			$request_id = $request->id;
+			$activity_title = $request->activity->title;
+			$activity_module = $request->activity->module->module_code.' '.$request->activity->module->module_name;
+
+
+			// Getting student details
+			$student = UserMod::where('id', '=',$request->user->id)->first();
+			$student_name = $student->name;
+			$student_email = $student->email;
+
+			// Subject of the notifying email:
+			$messageSubject = '[No reply] Update: Support Activity Ref#'.$request_id;
+
+
+
+			// Sending Email to PhD Student when requesting job
+			$data = array('name'=>$student_name, 'Recemail'=>$student_email, 'activity_title'=>$activity_title, 'activity_module'=>$activity_module, 'request_id'=>$request_id);
+			Mail::send('PhdApplicationRequestRejected', $data, function($message) use ($student_email, $student_name, $messageSubject)
+			{   
+			    $message->to($student_email, $student_name)->subject($messageSubject);
+			});
+
+			Session::flash('success', "Rejection was successfully done, An email was sent regarding that");
 			return back()->withInput();
 
 		} else {
@@ -1839,7 +1896,8 @@ class AdminController extends Controller
 			->with('requests', $requests)
 			->with('phd_name', $usr);
 		} else {
-			return redirect('Admin/Requests')->withErrors(['You are trying to access page that is not existed', '']);
+			Session::flash('failed', "Something went wrong, please try again!");
+			return back()->withInput();
 		}
 		
 	}

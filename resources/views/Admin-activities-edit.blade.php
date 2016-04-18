@@ -31,12 +31,29 @@
           </li>
         </ul>
 
+        @if($activity->module_id === null)
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
             <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
             <li><a href="/Admin/{{$user->id}}/Activities/{{$activity->id}}">{{$activity->title}}</a></li>
             <li class="active"><a href="#">Edit</a></li>
         </ul>
+        @else
+        <ul class="left">
+            <li><a href="/Admin/{{$user->id}}">Main</a></li>
+            <li class="has-dropdown">
+                <a>- Take to -</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
+            <li><a href="/Admin/{{$user->id}}/Modules/{{$activity->module->id}}">{{$activity->module->module_name}}</a></li>
+            <li><a href="/Admin/{{$user->id}}/Activities/{{$activity->id}}">{{$activity->title}}</a></li>
+            <li class="active"><a href="#">Edit</a></li>
+        </ul>
+        @endif
 
       </section>
     </nav>
@@ -77,7 +94,7 @@
                     <fieldset class="bio">
 
                         <legend class="legend">Activity Details</legend>
-                            <form action="/Admin/{{$user->id}}/Activities/{{$activity->id}}/Update" role="form" method="post">
+                            <form action="/Admin/{{$user->id}}/Activities/{{$activity->id}}/Update" role="form" method="post" id="editAct">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="large-3 columns">
                                     <label>Support Activity Title</label>
@@ -114,6 +131,11 @@
                                             @endforeach
                                         </select>
                                     @endif
+                                </div>
+                                <div class="large-12 columns">
+                                    <label>Activity Description
+                                        <textarea name="description" value="{{$activity->description}}" form="editAct" style="resize: none; min-height:100px;">{{$activity->description}}</textarea>
+                                    </label>
                                 </div>
                                 <div class="large-2 columns">
                                     <input type="submit" value="update" class="nice tiny blue radius button">
@@ -162,7 +184,19 @@
                                 </div>
                                 <div class="large-3 columns">
                                     <small>View Module</small>
-                                    <h6><a href="/Admin/{{$user->id}}/Modules/{{$activity->module->id}}" target="_blank">View</a></h6>
+                                    <h6><a href="/Admin/{{$user->id}}/Modules/{{$activity->module->id}}" >View</a></h6>
+                                </div>
+                                <div class="large-12 columns">
+                                    <small>Module Description</small>
+                                    <div class="panel">
+                                        <h5><small>
+                                        @if($activity->module->description === '')
+                                            <label class="error" align="center">This module has no description, please add description!</label>
+                                        @else
+                                            <label>{{$activity->module->description}}</label>
+                                        @endif
+                                        </small></h5>
+                                    </div>
                                 </div>
                             </div>
                         @endif        
@@ -190,7 +224,7 @@
                                         <td>{{date("d-m-Y", strtotime($session->date_of_session))}}</td>      
                                         <td>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td>
                                         <td>{{$session->location}}</td>                                                                                                
-                                        <td><a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}" target="_blank">View</a>
+                                        <td><a href="/Admin/{{$user->id}}/Activities/Sessions/{{$session->id}}" >View</a>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -225,6 +259,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

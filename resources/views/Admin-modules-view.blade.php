@@ -33,7 +33,14 @@
 
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
-            <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+            <li class="has-dropdown">
+                <a>- Take to -</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities">Activities</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
             <li class="active"><a href="#">{{$module->module_name}}</a></li>
         </ul>
 
@@ -100,6 +107,14 @@
                                     <small>Edit Module</small>
                                     <h6><a href="/Admin/{{$user->id}}/Modules/Modify/{{$module->id}}">Edit</a></h6>
                                 </div>
+                                <div class="large-12 columns">
+                                    <small>Module Description</small>
+                                        @if($module->description === '')
+                                            <label class="error" align="center">This module has no description, please add description!</label>
+                                        @else
+                                            <textarea readonly="readonly" style="resize: none; min-height:100px;">{{$module->description}}</textarea>
+                                        @endif
+                                </div>
                             </div>
                     </fieldset>
                 </div>
@@ -145,7 +160,12 @@
 
                     <fieldset class="bio">
 
-                        <legend class="legend">Support Activities Details</legend>
+                        <legend class="legend">
+                            <ul class="inline-list">
+                              <li>Module Support Activities</li>
+                              <li><a data-reveal-id="AddAct"><label>Add</label></a></li>
+                            </ul>
+                        </legend>
 
                         @if(Session::has('no_activities'))
                         <div class="row">
@@ -170,7 +190,7 @@
                                 <tr>
                                     <td>{{$activity->title}}</td>
                                     <td>{{$activity->role_type}}</td>                                                                                                
-                                    <td><a href="/Admin/{{$user->id}}/Activities/{{$activity->id}}">View</a>
+                                    <td><a href="/Admin/{{$user->id}}/Activities/{{$activity->id}}" >View</a>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -180,6 +200,47 @@
                 </div>
             </div>
     </section>
+
+                <!-- Add Activity pop up window -->
+                <div id="AddAct" class="reveal-modal xlarge" data-reveal>
+                    <h3>Add Session</h3>                    
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <form action="/Admin/{{$user->id}}/Activities/Add/Action" role="form" method="post" id="addAct">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="module_id" value="{{$module->id}}">
+                                <div class="row">
+                                    <div class="large-4 columns">
+                                        <label>Activity Title</label>
+                                        <input type="text" name="title" placeholder="Enter Activity Title"/>
+                                    </div>
+                                    <div class="large-3 columns">
+                                        <label>Role Type</label>
+                                        <select name="role_type">
+                                            <option name="role_type" value="Demonstrator">Demonstrator</option>
+                                            <option name="role_type" value="Teaching">Teaching</option>
+                                        </select>
+                                    </div>
+                                    <div class="large-3 columns">
+                                        <label>Number of Applicants?</label>
+                                        <input type="text" name="quant_ppl_needed" placeholder="How many applicants?"/>
+                                    </div>
+                                    <div class="large-2 columns">
+                                        <label>Add!</label>
+                                        <input type="submit" value="add" class="button postfix">
+                                    </div>
+                                    <div class="large-12 columns">
+                                        <label>Activity Description
+                                            <textarea name="description" form="addAct"></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>   
+                        </div>
+                    </div>
+                    <a class="close-reveal-modal">&#215;</a>
+                </div>
+                <!-- Add Activity pop up window ends -->
 
 
         <footer>
@@ -206,6 +267,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

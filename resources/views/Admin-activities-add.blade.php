@@ -64,6 +64,14 @@
                         </div>
                     </div>
                 @endif
+                @if(Session::has('failed'))
+                    <div class="large-12 medium-12 small-12 columns">
+                        <div data-alert class="alert-box alert" align="center">
+                            {{ Session::get('failed') }}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="large-12 medium-12 small-12 columns">
 
@@ -74,7 +82,7 @@
                             <div class="row">
                                 
                                 <div class="large-12 columns">
-                                    <form action="/Admin/{{$user->id}}/Activities/Add/Action" role="form" method="post">
+                                    <form action="/Admin/{{$user->id}}/Activities/Add/Action" role="form" method="post" id="addAct">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="row">
                                             <div class="large-4 columns">
@@ -102,6 +110,11 @@
                                             </div>
                                             <div class="large-6 columns">
                                                 <input type="submit" value="add" class="button postfix">
+                                            </div>
+                                            <div class="large-12 columns">
+                                                <label>Activity Description
+                                                    <textarea name="description" form="addAct"></textarea>
+                                                </label>
                                             </div>
                                         </div>
                                     </form>    
@@ -145,6 +158,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

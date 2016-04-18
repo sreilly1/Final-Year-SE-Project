@@ -83,7 +83,7 @@
                     <fieldset class="bio">
 
                         <legend class="legend">Activity Details</legend>
-                            <form action="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}/Modify/Action" role="form" method="post">
+                            <form action="/Lecturer/{{$user->id}}/Modules/mod{{$module->id}}/Act{{$activity->id}}/Modify/Action" role="form" method="post" id="editAct">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="large-4 columns">
                                     <label>Support Activity Title</label>
@@ -100,6 +100,11 @@
                                 <div class="large-4 columns">
                                     <label>Nom of Applicants Needed</label>
                                     <input type="text" name="quant_ppl_needed" value="{{$activity->quant_ppl_needed}}" />
+                                </div>
+                                <div class="large-12 columns">
+                                    <label>Activity Description
+                                        <textarea name="description" value="{{$activity->description}}" form="editAct" style="resize: none; min-height:100px;">{{$activity->description}}</textarea>
+                                    </label>
                                 </div>
                                 <div class="large-2 columns">
                                     <input type="submit" value="update" class="nice tiny blue radius button">
@@ -139,6 +144,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

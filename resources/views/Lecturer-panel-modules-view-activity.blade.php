@@ -110,6 +110,14 @@
                                     <small>Module Name:</small>
                                     <h6>{{$activity->module->module_name}}</h6>
                                 </div>
+                                <div class="large-12 columns">
+                                    <small>Activity Description</small>
+                                        @if($activity->description === '')
+                                            <label class="error" align="center">This Activity has no description, please add description!</label>
+                                        @else
+                                            <textarea readonly="readonly" style="resize: none; min-height:100px;">{{$activity->description}}</textarea>
+                                        @endif
+                                </div>
                             </div>
                     </fieldset>
                 </div>
@@ -150,7 +158,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID#</th>
+                                    <th>Title</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Location</th>
@@ -160,7 +168,7 @@
                             <tbody>
                                 @foreach($sessions as $session)
                                     <tr>
-                                        <td>{{$session->id}}</td>
+                                        <td>{{$session->title}}</td>
                                         <td>{{date("d-m-Y", strtotime($session->date_of_session))}}</td>      
                                         <td>{{date("H:i", strtotime($session->start_time))}} - {{date("H:i", strtotime($session->end_time))}}</td>
                                         <td>{{$session->location}}</td>                                                                                                
@@ -243,6 +251,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
 <script>
     $(document).foundation();
 </script>

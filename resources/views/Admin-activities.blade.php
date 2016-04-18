@@ -32,7 +32,13 @@
 
         <ul class="left">
             <li><a href="/Admin/{{$user->id}}">Main</a></li>
-            <li class="active"><a href="#">Support Activities</a></li>
+            <li class="active has-dropdown">
+                <a>Support Activities</a>
+                <ul class="dropdown">
+                  <li><a href="/Admin/{{$user->id}}/Modules">Modules</a></li>
+                  <li><a href="/Admin/{{$user->id}}/Activities/Sessions">Session</a></li>
+                </ul>
+            </li>
         </ul>
 
       </section>
@@ -58,6 +64,15 @@
         <div style="width:100%;"> <!-- Main Div -->
             
 
+            @if(Session::has('failed'))
+                <div class="large-12 medium-12 small-12 columns">
+                    <div data-alert class="alert-box alert" align="center">
+                        {{ Session::get('failed') }}
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                </div>
+            @endif
+            
             <div class="row">
                 <div class="large-12 columns">
                     <dl class="sub-nav">
@@ -87,7 +102,7 @@
 
 
                             <div class="row">
-                                <div class="large-12 medium-12 small-12 columns">
+                                <div class="large-12 medium-12 small-12 columns scroll">
                                     @if(Session::has('no_activities'))
                                         <div class="row">
                                             <div class="large-12 medium-12 small-12 columns">
@@ -119,7 +134,7 @@
                                                         <td>{{$activity->module->module_name}}</td>
                                                     @endif  
                                                     <td>{{$activity->quant_ppl_needed}}</td>
-                                                    <td><a href="/Admin/{{$user->id}}/Activities/{{$activity->id}}">View</a></td>
+                                                    <td><a href="/Admin/{{$user->id}}/Activities/{{$activity->id}}" >View</a></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

@@ -66,12 +66,20 @@
                         </div>
                     </div>
                 @endif
+                @if(Session::has('failed'))
+                    <div class="large-12 medium-12 small-12 columns">
+                        <div data-alert class="alert-box alert" align="center">
+                            {{ Session::get('failed') }}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="large-12 medium-12 small-12 columns">
 
                     <fieldset class="bio">
 
-                        <legend class="legend">Put Title</legend>
+                        <legend class="legend">Please enter new session details</legend>
 
                             <div class="row">
                                 
@@ -79,6 +87,11 @@
                                     <form action="/Admin/{{$user->id}}/Activities/Sessions/Add/Action" role="form" method="post">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="row">
+
+                                            <div class="large-4 columns">
+                                                <label>Session Title</label>
+                                                <input type="text" name="title" placeholder="Please enter session title">
+                                            </div>
                                             <div class="large-6 columns">
                                                 <label>Activity</label>
                                                 <select name="activity_id">
@@ -88,7 +101,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="large-6 columns">
+                                            <div class="large-2 columns">
                                                 <label>Date</label>
                                                 <input type="text" name="date_of_session" id="dp">
                                             </div>
@@ -150,6 +163,7 @@
         <script src="{{ asset('js/foundation/foundation.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.reveal.js') }}"></script>
         <script src="{{ asset('js/foundation/foundation.topbar.js') }}"></script>
+        <script src="{{ asset('js/foundation/foundation.alert.js') }}"></script>
         <script src="{{ asset('js/foundation-datepicker.js') }}"></script>
         <script src="{{ asset('js/locales/foundation-datepicker.vi.js') }}"></script>
         <script>
