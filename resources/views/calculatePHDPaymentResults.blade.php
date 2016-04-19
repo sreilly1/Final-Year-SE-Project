@@ -47,12 +47,7 @@
 
 		<div class="row">
 			<div class="twelve columns">
-				<h1>Responsive Tables</h1>
-				<h4 class="subhead">A CSS/JS solution for tables that allows them to shrink on small devices without sacrificing the value of tables, comparison of columns.</h4>
-				
-        <p>Our solution for responsive tables requires two included files (both linked on this page): responsive-tables.css and responsive-tables.js.</p>
-        <p>The JS will help us create some new elements on small devices, so we don't have to modify our table markup on the page. The CSS applies the requisite positioning and overflow styles to make the new elements work.</p>
-        <h5>Expenditure Breakdown for {{$phdStudent->name}}</h5>
+        <h2>Payment Breakdown for {{$phdStudent->name}}</h2>
         <table class="responsive">
           <tbody>
            <tr>
@@ -83,19 +78,19 @@
           <td></td>
         </tr>
         <tr>
-          <td><h5>Pay Rate for 'Demonstrator': £9.00 per hour</h5></td>
+          <td><h5>Pay Rate for 'Demonstrator': £12.21 per hour</h5></td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
         <tr>
-          <td><h5>Pay Rate for 'Teaching': £8.00 per hour</h5></td>
+          <td><h5>Pay Rate for 'Teaching': £10.58 per hour</h5></td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
         <tr>
-          <td><h5>Total Expenditure: £{{$totalExpenditure}}</h5></td>
+          <td><h5>Total Payment: £{{$totalPayment}}</h5></td>
           <td></td>
           <td></td>
           <td></td>

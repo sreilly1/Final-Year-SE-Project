@@ -23,6 +23,11 @@ Route::get('/lol', function () {
     return view('jobDescription');
 });
 
+Route::get('/calculatePHDStudentPayForm', function () {
+    return view('/calculatePHDStudentPayForm');
+});
+
+
 Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');
@@ -36,14 +41,14 @@ Route::get('intuitiveAssignment', [
     'uses' => 'IntuitiveAssignmentController@performIntuitiveAssignment'
 ]);
 
-Route::get('phdStudentExpenditure/{id}/{fromDate}/{toDate}', [
-    'as' => 'phdStudentExpenditure',
-    'uses' => 'ExpenditureController@calculatePHDStudentExpenditure'
-]);
-
 Route::get('moduleExpenditure/{id}/{fromDate}/{toDate}', [
     'as' => 'moduleExpenditure',
     'uses' => 'ExpenditureController@calculateModuleExpenditure'
+]);
+
+Route::get('calculatePHDStudentPaymentResults/{id}/{fromDate}/{toDate}', [
+    'as' => 'phdStudentPayment',
+    'uses' => 'PaymentController@calculatePHDStudentPayment'
 ]);
 
 /*
@@ -67,4 +72,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 
     Route::get('auth/logout', 'Auth\AuthController@logout');
+
 });

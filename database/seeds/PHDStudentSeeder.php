@@ -30,11 +30,13 @@ class PHDStudentSeeder extends Seeder
                 'room_number' => trim($currentRow[5]),
                 'role' => 'PHD Student'
             ]);
-    		//hours per week does not to be set as it is defaulted to 0
+    		//pick a single random user who is a lecturer to be the supervisor of the PHD student
+            $supervisor = User::where('role', '=', 'Lecturer')->get()->random(1);
+
     		$phdStudent = PhdStudent::create([
     			'user_id' => $user->id,
     			'student_id' => rand (1000000,9999999), #random 7 digit student_id
-    			'supervisor_name' => $currentRow[6],
+    			'supervisor_id' => $supervisor->id,
     			'year_of_study' => rand(1,3), //set the current year of study to be a random value between 1 and 3
     			'hours_per_week' => $currentRow[7]
     		]);
