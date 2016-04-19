@@ -110,5 +110,43 @@ class PaymentControllerTest extends TestCase
         );
 
     }
+     /**
+     * Test a call to  the 'CalculationOfPHDStudentPayment' function of the 
+     * PaymentController, providing a valid date range but the id of a PHD student
+     * that does not exist in the 'Users' table
+     */
+    /** @test */
+    public function testCalculationOfPHDStudentPaymentWithNonExistantPHDStudent() {
+
+        /*
+            call the 'calculatePHDStudentPayment' function of the 'PaymentController'
+            and set the value of the 'id' parameter to be 152000
+            and set the value of the 'fromDate' parameter in YYYY-MM-DD format 
+            (which the controller expect due to the way the dates are stored in the 
+            database) to '2016-10-15' and the value of the 'toDate' parameter to
+            '2015-11-15'
+        */
+        $response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
+            'id' => $phdStudent->id,
+            'fromDate' =>'2016-10-15',
+            'toDate' => '2015-11-15'
+        ));
+
+        /*
+            get the view returned from calling the 'calculatePHDStudentPayment'
+            of the 'PaymentController'
+        */
+        $view = $response->original;
+
+         /*
+            assert that the value of the 'error' variable contained
+            in the view has a value of 
+            'The PHD student that you specified does not exist.'
+        */
+        $this->assertEquals(
+            'The date range entered was invalid, please make sure the from date is earlier than the to date.', 
+            $view['error']
+        );
+    }
 
 }
