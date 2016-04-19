@@ -127,7 +127,7 @@ class PaymentControllerTest extends TestCase
             '2015-11-15'
         */
         $response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
-            'id' => $phdStudent->id,
+            'id' => 152000,
             'fromDate' =>'2016-10-15',
             'toDate' => '2015-11-15'
         ));
