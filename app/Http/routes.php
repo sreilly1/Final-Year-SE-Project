@@ -23,8 +23,8 @@ Route::get('/lol', function () {
     return view('jobDescription');
 });
 
-Route::get('/phdStudentPayForm', function () {
-    return view('/phdStudentPayForm');
+Route::get('/calculatePHDStudentPayForm', function () {
+    return view('/calculatePHDStudentPayForm');
 });
 
 
@@ -46,7 +46,7 @@ Route::get('moduleExpenditure/{id}/{fromDate}/{toDate}', [
     'uses' => 'ExpenditureController@calculateModuleExpenditure'
 ]);
 
-Route::get('phdStudentPayment/{id}/{fromDate}/{toDate}', [
+Route::get('calculatePHDStudentPaymentResults/{id}/{fromDate}/{toDate}', [
     'as' => 'phdStudentPayment',
     'uses' => 'PaymentController@calculatePHDStudentPayment'
 ]);

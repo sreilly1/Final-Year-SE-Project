@@ -14,7 +14,7 @@ class PaymentControllerTest extends TestCase
      * value for the users table
      */
     /** @test */
-    public function testCalculationOfPHDStudentPaymentSucceeds() {
+    public function testCalculatePHDStudentPaymentSuccess() {
 
         //get the first PHD student whose name is 'Alicia Reid'
         $phdStudent = User::where('name','=','Alicia Reid')->first();
@@ -40,20 +40,20 @@ class PaymentControllerTest extends TestCase
     	$view = $response->original;
 
         /*
-            assert that the value of the 'totalPayment' variable c0ntained
+            assert that the value of the 'totalPayment' variable contained
             in the view has a value of 227.9
         */
     	$this->assertEquals(227.9, $view['totalPayment']);
 
 
         /*
-            assert that the value of the 'demonstratorHours' variable c0ntained
+            assert that the value of the 'demonstratorHours' variable contained
             in the view has a value of 10
         */
     	$this->assertEquals(10, $view['demonstratorHours']);
 
         /*
-            assert that the value of the 'teachingHours' variable c0ntained
+            assert that the value of the 'teachingHours' variable contained
             in the view has a value of 10
         */
     	$this->assertEquals(10, $view['teachingHours']);
@@ -73,8 +73,9 @@ class PaymentControllerTest extends TestCase
      * PaymentController, providing an invalid date range and a valid 
      * 'id' field value for the users table 
      */
+    /** @test */
     public function testCalculationOfPHDStudentPaymentFails() {
-        
+
         //get the first PHD student whose name is 'Alicia Reid'
         $phdStudent = User::where('name','=','Alicia Reid')->first();
 
@@ -99,7 +100,7 @@ class PaymentControllerTest extends TestCase
         $view = $response->original;
 
         /*
-            assert that the value of the 'error' variable c0ntained
+            assert that the value of the 'error' variable contained
             in the view has a value of 
             'the date range entered was invalid, please make sure the from date is earlier than the to date.'
         */
@@ -109,4 +110,5 @@ class PaymentControllerTest extends TestCase
         );
 
     }
+
 }

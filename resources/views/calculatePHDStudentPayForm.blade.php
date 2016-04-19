@@ -16,7 +16,8 @@
 	<div data-alert class="alert-box info radius">
  		<p>
  			Select the dates which you want to be used for calculating what the PHD 
- 			student should be paid.
+ 			student should be paid. Please note that when you select the dates they
+ 			will be shown in YYYY-MM-DD format in the textboxes.
  		</p>
 	</div>
 
