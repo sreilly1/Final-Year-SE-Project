@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActivityRequestsTable extends Migration
+class CreateModulesActivitiesRequestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,15 @@ class CreateActivityRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity_request', function(Blueprint $table) {
+        Schema::create('activities_request', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('module_id')->unsigned();
-            $table->foreign('module_id')->references('id')->on('modules');
             $table->integer('activity_id')->unsigned();
             $table->foreign('activity_id')->references('id')->on('modules_activities');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->enum('request_status',['Pending', 'Confirmed', 'Declined']);
+            $table->string('supervisor_comment');
+            $table->enum('supervisor_confirmation',['Pending', 'Confirmed', 'Declined']);
+            $table->enum('status',['Pending', 'Accepted', 'Declined']);
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateActivityRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_request');
+        Schema::drop('activities_request');
     }
 }
