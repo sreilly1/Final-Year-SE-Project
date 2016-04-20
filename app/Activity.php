@@ -4,11 +4,27 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+class Activity extends Model
+{
+    protected $table = 'activities';
 
-class Activity extends Model{
+    /**
+     * Get the sessions for the support activity(lab, tutorial, etc).
+     */
+    public function sessions() {
 
-	protected $table = 'activities';
-	protected $fillable =  ['id', 'title', 'role_type', 'module_id','quant_ppl_needed', 'description']; 
+    	//use some information from here (one to many relationship between Session and Activity):
+    	//https://laravel.com/docs/master/eloquent-relationships#one-to-many
+    	return $this->hasMany('App\Session');
+    }
+
+ /**
+     * Get the activity requests (applications) for the support activity (lab, tutorial, etc).
+     */
+   	public function activityRequests() {
+   		return $this->hasMany('App\ActivityRequest');
+   	}
+
 
     public function module()
     {
@@ -32,3 +48,11 @@ class Activity extends Model{
     }
 
 }
+
+
+     /**
+     * return the succesful applications for the support activity.
+     */
+    public function getSuccessfulApplications() {
+      return $this->activityRequests()->where('request_status', '=', 'confirmed');
+    }

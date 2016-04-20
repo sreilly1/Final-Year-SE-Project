@@ -20,7 +20,6 @@ class CreateSessionsTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->string('location');
-            $table->timestamps();
         });
     }
 
