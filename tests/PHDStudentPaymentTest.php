@@ -129,7 +129,7 @@ class PaymentControllerTest extends TestCase
         $response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
             'id' => 152000,
             'fromDate' =>'2016-10-15',
-            'toDate' => '2015-11-15'
+            'toDate' => '2016-11-15'
         ));
 
         /*
@@ -144,7 +144,7 @@ class PaymentControllerTest extends TestCase
             'The PHD student that you specified does not exist.'
         */
         $this->assertEquals(
-            'The date range entered was invalid, please make sure the from date is earlier than the to date.', 
+            'The PHD student that you specified does not exist.', 
             $view['error']
         );
     }
