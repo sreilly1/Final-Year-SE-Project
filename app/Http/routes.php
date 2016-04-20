@@ -207,7 +207,7 @@ Route::group(['middleware' => 'web'], function() {
     Route::post('deleteUsr/{id}', 'AdminController@destroyUsr');
     Route::post('deletePhdUsr/{id}', 'AdminController@destroyPhDUsr');
 
-
+});
 
 /*
 |--------------------------------------------------------------------------
