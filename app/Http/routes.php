@@ -19,15 +19,9 @@ Route::get('/student/options', function () {
     return view('student-options');
 });
 
-Route::get('/lol', function () {
-    return view('jobDescription');
-});
-
-
 Route::get('/calculatePHDStudentPayForm', function () {
     return view('/calculatePHDStudentPayForm');
 });
-Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');
 
@@ -213,7 +207,7 @@ Route::group(['middleware' => 'web'], function() {
     Route::post('deleteUsr/{id}', 'AdminController@destroyUsr');
     Route::post('deletePhdUsr/{id}', 'AdminController@destroyPhDUsr');
 
-
+});
 
 /*
 |--------------------------------------------------------------------------

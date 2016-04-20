@@ -13,8 +13,7 @@ class Activity extends Model
      */
     public function sessions() {
 
-    	//use some information from here (one to many relationship between Session and Activity):
-    	//https://laravel.com/docs/master/eloquent-relationships#one-to-many
+    	
     	return $this->hasMany('App\Session');
     }
 
@@ -37,22 +36,24 @@ class Activity extends Model
         return $this->hasMany('App\addRequest', 'id', 'activity_id');
     }
 
-    public function sessions()
-    {
-        return $this->hasMany('App\ActSession', 'id', 'activity_id')->orderBy('date_of_session', 'asc');
-    }
+    // public function sessions()
+    // {
+    //     return $this->hasMany('App\ActSession', 'id', 'activity_id')->orderBy('date_of_session', 'asc');
+    // }
 
     public function events()
     {
         return $this->hasMany('App\ActSession')->orderBy('date_of_session', 'asc');
     }
 
-}
-
-
-     /**
+    /**
      * return the succesful applications for the support activity.
      */
     public function getSuccessfulApplications() {
       return $this->activityRequests()->where('request_status', '=', 'confirmed');
     }
+
+}
+
+
+     
