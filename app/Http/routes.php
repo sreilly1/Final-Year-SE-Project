@@ -19,15 +19,9 @@ Route::get('/student/options', function () {
     return view('student-options');
 });
 
-Route::get('/lol', function () {
-    return view('jobDescription');
-});
-
-
 Route::get('/calculatePHDStudentPayForm', function () {
     return view('/calculatePHDStudentPayForm');
 });
-Route::resource('job', 'JobController');
 
 Route::resource('EngagementForm', 'EngagementFormController');
 
