@@ -13,9 +13,9 @@
 
 
 
-	@if (isset($error))
-	<h2>{{$error}}</h2>
-	@endif
+	<?php if(isset($error)): ?>
+	<h2><?php echo e($error); ?></h2>
+	<?php endif; ?>
 
 	<form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
 
@@ -36,9 +36,9 @@
 
 		<div>
 			<select id = "phdStudent">
-				@foreach($phdStudents as $phdStudent )
-				<option value="{{$phdStudent->id}}">{{$phdStudent->name}}</option>
-				@endforeach($phdStudents as $phdStudent )
+				<?php foreach($phdStudents as $phdStudent ): ?>
+				<option value="<?php echo e($phdStudent->id); ?>"><?php echo e($phdStudent->name); ?></option>
+				<?php endforeach; ?>
 			</select>
 		</div>
 
@@ -68,9 +68,9 @@ $(function() {
 				the date format will be converted to yyyy-mm-dd when the user selects a date with
 				the datepicker, this is simpler and less code than converting the dates format on 
 				the server side to match the format in which it is stored in the database
-			*/
-			dateFormat: 'yy-mm-dd' 
-		});
+				*/
+				dateFormat: 'yy-mm-dd' 
+			});
 	/*
 		bind an event handler to the form with an id of 'date-range-form', 
 		as shown in :https://api.jquery.com/submit/
@@ -97,6 +97,7 @@ $(function() {
 				//additional dialogue boxes
 				return false;
 			}
+
 			//dynamically change the 'action' atribute of the form with the id 'form' so that
 			//the url will be in the following format: 
 			//'calculatePHDStudentPaymentResults/{idofPHDStudent}/{fromDate}/{toDate}', 
