@@ -23,10 +23,20 @@ Route::get('/calculatePHDStudentPayForm', function () {
     return view('/calculatePHDStudentPayForm');
 });
 
+Route::get('/calculatePHDStudentPayForm', [
+    'as' => 'showCalculatePHDStudentPayForm',
+    'uses' => 'PaymentController@showCalculatePHDStudentPayForm'
+]);
+
+Route::get('calculatePHDStudentPaymentResults/{id}/{fromDate}/{toDate}', [
+    'as' => 'phdStudentPayment',
+    'uses' => 'PaymentController@calculatePHDStudentPayment'
+]);
+
 Route::resource('EngagementForm', 'EngagementFormController');
 
 Route::get('/assignment', function() {
-	return view('assignment');
+	return view('intuitiveAssignmentResults');
 });
 
 Route::get('intuitiveAssignment', [
@@ -38,10 +48,8 @@ Route::get('moduleExpenditure/{id}/{fromDate}/{toDate}', [
     'as' => 'moduleExpenditure',
     'uses' => 'ExpenditureController@calculateModuleExpenditure'
 ]);
-Route::get('calculatePHDStudentPaymentResults/{id}/{fromDate}/{toDate}', [
-    'as' => 'phdStudentPayment',
-    'uses' => 'PaymentController@calculatePHDStudentPayment'
-]);
+
+
 Route::resource('PhdPanel', 'PHDPANELController');
 Route::group(['middleware' => 'web'], function() {
     // Choose pages:

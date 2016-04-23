@@ -40,7 +40,6 @@ class ActivitiesSeeder extends Seeder
             	'title' => trim($currentRow[0]),
             	'role_type' => trim($currentRow[1]),
             	'module_id' => $module->id,
-                'staff_1' => $currentRow[3],
             	'quant_ppl_needed' => $currentRow[4],
                 'closing_date_for_applications' => $currentRow[5],
             	'knowledge_required' => $currentRow[6]

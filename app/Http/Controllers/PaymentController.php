@@ -12,11 +12,36 @@ use Illuminate\Support\Facades\Redirect;
 
 class PaymentController extends Controller
 {
+
+    /**
+     * Show the form for allowing the system administrator
+     * to choose the PhD student to calculate the payment for
+     * and selecting the date range which the payment should 
+     * relate to.
+     *
+     * @return view
+     */
+    public function showCalculatePHDStudentPayForm() {
+        
+        /*
+            get all the PhD students from the database and order
+            them by the 'name' field (by their firstname)
+        */
+        $phdStudents = User::where('role', '=', 'PHD Student')
+        ->orderBy('name')
+        ->get();
+
+        
+        return view('calculatePHDStudentPayForm')->with([
+            'phdStudents' => $phdStudents
+        ]);
+    }
+
     /**
 	 * Calculates the payment a PHD student was due from a given date range 
 	 * (expresssed by the 'fromDate' and 'toDate' parameters) and returns other relevant
 	 * details such as the sessions they undertook in that date range and the number
-	 * of hours they worked as a demonstrator, similarly with the role 'teaching'
+	 * of hours they worked as a demonstrator, similarly with the role 'teaching'.
      * 
 	 * @param  int  $id, string $fromDate, string $toDate
 	 * @return view
@@ -31,7 +56,7 @@ class PaymentController extends Controller
             /*
                 check that the value of $id matches the 'id' field of a record in the users table
                 and if it doesn't then return the calculatePHDStudentExpenditureResult.blade.php file
-                which is located under (resources\views) and pass it the variable
+                which is located under (resources\views) and pass it the variable.
                 $error which can be reference as $error in the blade file 
             */
                 if ($phdStudent == null ) {
@@ -43,10 +68,13 @@ class PaymentController extends Controller
                 } else {
                     /*
                     query the 'sessions' relationship (which is a many-to-many relationship, see 
-                    'https://laravel.com/docs/5.2/eloquent-relationships#many-to-many'for more information about using and specifying
-                    many-to-many relationship) specified in the 'User' model (which is located at App\User.php) to get the sessions
-                    to which the PHD student was allocated and reduce the sessions to those that occur between the 'fromDate' and 'toDate'
-                    parameters and order them chronologically. For use of WhereBetween see 'https://laravel.com/docs/5.2/queries#where-clauses'
+                    'https://laravel.com/docs/5.2/eloquent-relationships#many-to-many'
+                    for more information about using and specifying many-to-many relationship) 
+                    specified in the 'User' model (which is located at App\User.php) to get 
+                    the sessions to which the PHD student was allocated and reduce 
+                    the sessions to those that occur between the 'fromDate' and 'toDate'
+                    parameters and order them chronologically. 
+                    For use of WhereBetween see 'https://laravel.com/docs/5.2/queries#where-clauses'.
                 */
                     $sessions = $phdStudent->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))
                     ->orderBy('date_of_session')
@@ -61,7 +89,7 @@ class PaymentController extends Controller
                 /*
                     increment the total payment by the number of hours that were worked 
                     as a 'demonstrator' multiplied by the assumed payrate. Similarly
-                    with the number of hours worked under the 'Teaching' role
+                    with the number of hours worked under the 'Teaching' role.
                 */
                     $demonstratorHours = $hoursWorkedToRoleMapping['Demonstrator'];
                     $totalPayment +=  $demonstratorHours * 12.21;
@@ -77,7 +105,7 @@ class PaymentController extends Controller
                         $demonstratorHours,
                         $teachingHours,
                     each variable in the view can then be referenced by the same name
-                    as per the example given at 'https://laravel.com/docs/5.2/views'
+                    as per the example given at 'https://laravel.com/docs/5.2/views'.
                 */
                     return view('calculatePHDPaymentResults')->with([
                         'sessions'                 => $sessions, 
@@ -92,7 +120,7 @@ class PaymentController extends Controller
             /*
                 return the calculatePHDStudentExpenditureResult.blade.php file
                 which is located under (resources\views) and pass it the variable
-                $error which can be reference as $error in the blade file
+                $error which can be reference as $error in the blade file.
             */
                 return view('phdStudentPayInterface')->with([
                     'error' => $error
@@ -104,7 +132,7 @@ class PaymentController extends Controller
      * Compares the given 'fromDate' and 'toDate values (which express a date range)
      * to check that the date range is valid ('fromDate' comes before 'toDate')
      * chronologically and returns 'false' if the data range is invalid, otherwise
-     * it will return true
+     * it will return true.
      * 
      * @param  string $fromDate, string $toDate
      * @return Boolean
@@ -123,7 +151,7 @@ class PaymentController extends Controller
      * a mapping (an associative array ) where each key represents a role
      * that a PHD student may undertake for a session and each key
      * represents the number of hours that are related to that role
-     * for the sessions passed to the function
+     * for the sessions passed to the function.
      * 
      * @param collection $sessions
      * @return [] $hoursWorkedMapping
@@ -145,7 +173,7 @@ class PaymentController extends Controller
                     by querying the session's activity relationship to work out 
                     what the parent support activity is for the session
                     i.e. what support activity the sesion relates to then grab
-                    the value of the 'role_type' field of the support activity
+                    the value of the 'role_type' field of the support activity.
                 */
                     $role = $session->activity->role_type;
                     $hoursWorkedMapping[$role] += $sessionDuration;
