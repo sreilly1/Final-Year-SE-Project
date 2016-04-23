@@ -67,13 +67,13 @@
           </tr> 
           @endforeach
           <tr>
-            <td><h5>Pay Rate for 'Demonstrator': £9.00 per hour (per tutor)</h5></td>
+            <td><h5>Pay Rate for 'Demonstrator': £12.21 per hour (for each tutor)</h5></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td><h5>Pay Rate for 'Teaching': £8.00 per hour (per tutor)</h5></td>
+            <td><h5>Pay Rate for 'Teaching': £10.58 per hour (for each tutor)</h5></td>
             <td></td>
             <td></td>
             <td></td>
