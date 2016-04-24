@@ -23,9 +23,6 @@
 </head>
 <body>
 
-	<?php if(isset($error)): ?>
-		<h2><?php echo e($error); ?></h2>
-	<?php endif; ?>
 
 	<nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
@@ -59,20 +56,14 @@
 
 	<form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
 
-		<div data-alert class="alert-box secondary">
-			<p>
-				Select the PHD student whose pay you wish to be calculated. 
+			<?php if(isset($error)): ?>
+				<?php foreach($error as $e ): ?>
+				<div data-alert class="alert-box alert round">
+  					<?php echo e($e); ?>
 
-			</p>
-			<p>
-				Also select the dates which you want to be used for calculating what the PHD 
-				student should be paid. 
-			</p>
-			<p>
-				Please note that when you select the dates they
-				will be shown in YYYY-MM-DD format in the textboxes.
-			</p>
-		</div>
+				</div>
+				<?php endforeach; ?>
+			<?php endif; ?>
 
 		<div class="large-8 medium-8 small-8 columns">
 			PhD Student: <select id = "phdStudent">
