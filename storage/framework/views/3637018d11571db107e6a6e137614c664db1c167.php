@@ -52,7 +52,7 @@
 				
         <p>Our solution for responsive tables requires two included files (both linked on this page): responsive-tables.css and responsive-tables.js.</p>
         <p>The JS will help us create some new elements on small devices, so we don't have to modify our table markup on the page. The CSS applies the requisite positioning and overflow styles to make the new elements work.</p>
-        <h5>Expenditure Breakdown for {{$module->module_name}}</h5>
+        <h5>Expenditure Breakdown for <?php echo e($module->module_name); ?></h5>
         <table class="responsive">
           <tbody>
            <tr>
@@ -60,12 +60,12 @@
             <th>Expenditure</th>
           </tr>
         </tbody>
-          @foreach($activityCosts as $activityID => $activityCost)
+          <?php foreach($activityCosts as $activityID => $activityCost): ?>
           <tr>
-            <td>{{$activityID}}</td>
-            <td>£{{$activityCost}}</td>
+            <td><?php echo e($activityID); ?></td>
+            <td>£<?php echo e($activityCost); ?></td>
           </tr> 
-          @endforeach
+          <?php endforeach; ?>
           <tr>
             <td><h5>Pay Rate for 'Demonstrator': £12.21 per hour (for each tutor)</h5></td>
             <td></td>
@@ -79,7 +79,7 @@
             <td></td>
           </tr>
           <tr>
-            <td><h5>Total Expenditure: £{{$totalModuleCost}}</h5></td>
+            <td><h5>Total Expenditure: £<?php echo e($totalModuleCost); ?></h5></td>
             <td></td>
             <td></td>
             <td></td>

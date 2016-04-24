@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+
+	<!-- 
+		add in the Zurb foundation files like Fahad has done in his part
+		of the work
+	-->
+	<meta charset="utf-8">
+    <title>foundation on laravel</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+    <script src="{{ asset('js/modernizr.js') }}"> </script>
+
+
 	<!-- 
 		import the neccessary scripts and CSS for jQuery's datepicker 
 		as shown at: https://jqueryui.com/datepicker/ 
@@ -12,33 +24,51 @@
 <body>
 
 
+	<nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">b</a></h1>
+        </li>
+         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
 
-	@if (isset($error))
-	<h2>{{$error}}</h2>
-	@endif
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="has-dropdown">
+            <a href="#">Redirect</a>
+            <ul class="dropdown">
+              <li><a href="/Admin">Main Page</a></li>
+              <li><a href="/Admin/Requests">View Requests</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="left">
+            <li><a href="">Main</a></li>
+            <li><a href="b">Support Activities</a></li>
+            <li class="active"><a href="#">Add</a></li>
+        </ul>
+
+      </section>
+    </nav>
 
 	<form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
 
-		<div data-alert class="alert-box info radius">
-			<p>
-				Select the PHD student whose pay you wish to be calculated. 
+			@if (isset($errors))
+				@foreach($errors as $error )
+				<div data-alert class="alert-box alert round">
+  					{{$error}}
+				</div>
+				@endforeach()
+			@endif
 
-			</p>
-			<p>
-				Also select the dates which you want to be used for calculating what the PHD 
-				student should be paid. 
-			</p>
-			<p>
-				Please note that when you select the dates they
-				will be shown in YYYY-MM-DD format in the textboxes.
-			</p>
-		</div>
-
-		<div>
-			<select id = "phdStudent">
+		<div class="large-8 medium-8 small-8 columns">
+			PhD Student: <select id = "phdStudent">
 				@foreach($phdStudents as $phdStudent )
 				<option value="{{$phdStudent->id}}">{{$phdStudent->name}}</option>
-				@endforeach($phdStudents as $phdStudent )
+				@endforeach
 			</select>
 		</div>
 
@@ -46,14 +76,17 @@
 		the fields which will allow the user to select a date range for which to calculate
 		a phd students pay
 	-->
-	<div>
+	<div class="large-8 medium-8 small-8 columns">
 		From: <input type="text" class="datepicker" id ="from"> 
 	</div>
-	<div>
+	<div class="large-8 medium-8 small-8 columns">
 		To: <input type="text" class="datepicker" id ="to">
 	</div>
 
-	<button type="submit" id="submitBtn">Submit</button>
+	<div class="large-8 medium-8 small-8 columns">
+		<button type="submit" id="submitBtn">Submit</button>
+	</div>
+	
 </form>
 
 <script>

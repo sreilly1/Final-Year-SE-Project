@@ -50,7 +50,7 @@ class Activity extends Model
      * return the succesful applications for the support activity.
      */
     public function getSuccessfulApplications() {
-      return $this->activityRequests()->where('request_status', '=', 'confirmed');
+      return $this->activityRequests()->where('status', '=', 'Accepted');
     }
 
 }

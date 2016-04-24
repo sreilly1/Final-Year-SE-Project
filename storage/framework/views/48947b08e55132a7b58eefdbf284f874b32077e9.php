@@ -12,8 +12,6 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
   
-  <title>Responsive Tables by ZURB</title>
-  
   <!-- Included CSS Files -->
   <!-- Combine and Compress These CSS Files -->
   <link rel="stylesheet" href="/css/Responsive Tables/globals.css">

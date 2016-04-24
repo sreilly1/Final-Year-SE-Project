@@ -1,5 +1,13 @@
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/dataTables.bootstrap.css" rel="stylesheet">
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+
+<body>
+
     <div class="row">
         <div class="col-sm-12">
             <table id="table_id" class="table table-striped">
@@ -10,12 +18,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($assignmentsMade as $phdStudentName => $activityTitle)
+                    @foreach($assignmentsMade as $phdStudentName => $activityTitle)
                     <tr>
                         <td>{{$activityTitle}}</td>
                         <td>{{$phdStudentName}}</td>
                     </tr>                 
-                @endforeach
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -29,3 +37,5 @@
         $('#table_id').DataTable();
     } );
     </script>
+</body>
+</html>
