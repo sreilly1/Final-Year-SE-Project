@@ -196,5 +196,4 @@ class PaymentControllerTest extends TestCase
         );
 
     }
-
 }
