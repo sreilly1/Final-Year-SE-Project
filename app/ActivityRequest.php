@@ -11,5 +11,5 @@ class ActivityRequest extends Model
      *
      * @var string
      */
-    protected $table = 'activity_request';
+    protected $table = 'activities_request';
 }
