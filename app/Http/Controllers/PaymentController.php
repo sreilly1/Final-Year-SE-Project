@@ -57,25 +57,13 @@ class PaymentController extends Controller
         $errors = $this->checkForErrors($phdStudent, $fromDate, $toDate);
 
         if ( empty($errors) ) {
-
-            
-
-            /*
-                check that the value of $id matches the 'id' field of a record in the users table
-                and if it doesn't then return the calculatePHDStudentExpenditureResult.blade.php file
-                which is located under (resources\views) and pass it the variable.
-                $error which can be reference as $error in the blade file 
-            */
                
             /*
-                query the 'sessions' relationship (which is a many-to-many relationship, see 
-                'https://laravel.com/docs/5.2/eloquent-relationships#many-to-many'
-                for more information about using and specifying many-to-many relationship) 
+                query the 'sessions' relationship (which is a many-to-many relationship
                 specified in the 'User' model (which is located at App\User.php) to get 
                 the sessions to which the PHD student was allocated and reduce 
                 the sessions to those that occur between the 'fromDate' and 'toDate'
-                parameters and order them chronologically. 
-                For use of WhereBetween see 'https://laravel.com/docs/5.2/queries#where-clauses'.
+                parameters and then order them chronologically. 
             */
                 $sessions = $phdStudent->sessions()->whereBetween('date_of_session',array($fromDate,$toDate))
                 ->orderBy('date_of_session')
@@ -105,7 +93,7 @@ class PaymentController extends Controller
                     $demonstratorHours,
                     $teachingHours,
                 each variable in the view can then be referenced by the same name
-                as per the example given at 'https://laravel.com/docs/5.2/views'.
+                in the file
             */
             return view('calculatePHDPaymentResults')->with([
                 'sessions'                 => $sessions, 
@@ -122,6 +110,13 @@ class PaymentController extends Controller
             $phdStudents = User::where('role', '=', 'PHD Student')
             ->orderBy('name')
             ->get();
+
+            /* 
+                return the user back to the form for choosing the Phd student
+                and the dates for the calculation to be performed on.
+                pass the $phdStudents variable so that the view doesn't reference
+                a non existent variable.
+            */
             return view('calculatePHDStudentPayForm')->with([
                 'errors'       => $errors,
                 'phdStudents' => $phdStudents 
