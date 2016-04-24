@@ -166,13 +166,10 @@ class PaymentController extends Controller
     }
 
     /**
-     * Checks that a user whose 'id' field value in the database matches
-     * the $id value passed to 'calculatePHDStudentPayment', and that the 
-     * neither the $fromDate nor the $toDate values are null 
-     * (and represent a valid date range if neither of them is null)
+     * Checks the validity of the provided input
      * 
-     * @param  string $fromDate, string $toDate
-     * @return Boolean
+     * @param  obj $phdStudent, string $fromDate, string $toDate
+     * @return [] $errors
      */
     public function checkForErrors ($phdStudent,$fromDate, $toDate) {
 
@@ -183,6 +180,7 @@ class PaymentController extends Controller
             $dateError= 'Please make sure the from date is earlier than the to date.';
             array_push($errors, $dateError);
         }
+
         /*
             if $phdStudent is null then a user whose id matches the one passed to the
             'calculatePHDStudentPayment' does not exist
@@ -193,8 +191,7 @@ class PaymentController extends Controller
         }
 
         /*
-            check the $fromDate and $toDate parameters are dates in the format
-            yyyy-mm-dd
+            check the $fromDate and $toDate parameters are in the format yyyy-mm-dd
         */ 
         if (DateTime::createFromFormat('Y-m-d', $fromDate) == false
             || (DateTime::createFromFormat('Y-m-d', $toDate) == false)) {
