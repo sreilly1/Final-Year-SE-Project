@@ -56,19 +56,19 @@
 
 	<form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
 
-			@if (isset($error))
-				@foreach($error as $e )
+			@if (isset($errors))
+				@foreach($errors as $error )
 				<div data-alert class="alert-box alert round">
-  					{{$e}}
+  					{{$error}}
 				</div>
-				@endforeach($phdStudents as $phdStudent )
+				@endforeach()
 			@endif
 
 		<div class="large-8 medium-8 small-8 columns">
 			PhD Student: <select id = "phdStudent">
 				@foreach($phdStudents as $phdStudent )
 				<option value="{{$phdStudent->id}}">{{$phdStudent->name}}</option>
-				@endforeach($phdStudents as $phdStudent )
+				@endforeach
 			</select>
 		</div>
 

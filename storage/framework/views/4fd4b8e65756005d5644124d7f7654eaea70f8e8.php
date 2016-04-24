@@ -56,10 +56,10 @@
 
 	<form class="form" id="date-range-form" enctype="multipart/form-data" action="get">
 
-			<?php if(isset($error)): ?>
-				<?php foreach($error as $e ): ?>
+			<?php if(isset($errors)): ?>
+				<?php foreach($errors as $error ): ?>
 				<div data-alert class="alert-box alert round">
-  					<?php echo e($e); ?>
+  					<?php echo e($error); ?>
 
 				</div>
 				<?php endforeach; ?>

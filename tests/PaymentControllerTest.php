@@ -74,7 +74,7 @@ class PaymentControllerTest extends TestCase
      * 'id' field value for the users table 
      */
     /** @test */
-    public function testCalculationOfPHDStudentPaymentFails() {
+    public function testCalculationOfPHDStudentPaymentInvalidDateRange() {
 
         //get the first PHD student whose name is 'Alicia Reid'
         $phdStudent = User::where('name','=','Alicia Reid')->first();
@@ -83,7 +83,7 @@ class PaymentControllerTest extends TestCase
             call the 'calculatePHDStudentPayment' function of the 'PaymentController'
             and set the value of the 'id' parameter to be the ID of the PHD student
             and set the value of the 'fromDate' parameter in YYYY-MM-DD format 
-            (which the controller expect due to the way the dates are stored in the 
+            (which the controller expects due to the way the dates are stored in the 
             database) to '2016-10-15' and the value of the 'toDate' parameter to
             '2015-11-15'
         */
@@ -99,37 +99,38 @@ class PaymentControllerTest extends TestCase
         */
         $view = $response->original;
 
-        /*
-            assert that the value of the 'error' variable contained
-            in the view has a value of 
-            'the date range entered was invalid, please make sure the from date is earlier than the to date.'
-        */
-        $this->assertEquals(
-            'The date range entered was invalid, please make sure the from date is earlier than the to date.', 
-            $view['error']
-        );
 
+        $errorsReceived = $view['errors'];
+        /*
+            assert that the assert that the 'errors' variable (which is an array)
+            contained in the view has a value of
+            'Please make sure the from date is earlier than the to date.'
+        */
+        $this->assertContains(
+            'Please make sure the from date is earlier than the to date.', $errorsReceived
+        );
     }
-     /**
+
+    /**
      * Test a call to  the 'CalculationOfPHDStudentPayment' function of the 
-     * PaymentController, providing a valid date range but the id of a PHD student
-     * that does not exist in the 'Users' table
+     * PaymentController, providing a date range and an 'id' value that does not exist
+     * in the 'Users' table of the database
      */
     /** @test */
-    public function testCalculationOfPHDStudentPaymentWithNonExistantPHDStudent() {
+    public function testCalculationOfPHDStudentPaymentNonExistentPHDStudent() {
 
         /*
             call the 'calculatePHDStudentPayment' function of the 'PaymentController'
-            and set the value of the 'id' parameter to be 152000
+            and set the value of the 'id' parameter to be 1278910
             and set the value of the 'fromDate' parameter in YYYY-MM-DD format 
             (which the controller expect due to the way the dates are stored in the 
-            database) to '2016-10-15' and the value of the 'toDate' parameter to
-            '2015-11-15'
+            database) to '2016-10-01' and the value of the 'toDate' parameter to
+            '2016-11-10'
         */
         $response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
-            'id' => 152000,
+            'id' => 1278910,
             'fromDate' =>'2016-10-15',
-            'toDate' => '2016-11-15'
+            'toDate' => '2016-11-10'
         ));
 
         /*
@@ -138,15 +139,62 @@ class PaymentControllerTest extends TestCase
         */
         $view = $response->original;
 
-         /*
-            assert that the value of the 'error' variable contained
-            in the view has a value of 
+
+        $errorsReceived = $view['errors'];
+        /*
+            assert that the assert that the 'errors' variable (which is an array)
+            contained in the view has a value of
             'The PHD student that you specified does not exist.'
         */
-        $this->assertEquals(
-            'The PHD student that you specified does not exist.', 
-            $view['error']
+        $this->assertContains(
+            'The PHD student that you specified does not exist.', $errorsReceived
         );
+    }
+
+    /**
+     * Test a call to  the 'CalculationOfPHDStudentPayment' function of the 
+     * PaymentController, providing dates in an invalid format, 
+     * and a valid 'id' field value from the users table
+     */
+    /** @test */
+    public function testCalculationOfPHDStudentPaymentIncorrectDateFormat() {
+        //get the first PHD student whose name is 'Alicia Reid'
+        $phdStudent = User::where('name','=','Alicia Reid')->first();
+
+        /*
+            call the 'calculatePHDStudentPayment' function of the 'PaymentController'
+            and set the value of the 'id' parameter to be the ID of the PHD student
+            and set the value of the 'fromDate' parameter to be the letter 'a' 
+            (which the controller expects due to the way the dates are stored in the 
+            database)  and the value of the 'toDate' parameter to
+            to be the letter 'b'
+        */
+        $response = $this->action('GET', 'PaymentController@calculatePHDStudentPayment', array(
+            'id' => $phdStudent->id,
+            'fromDate' =>'a',
+            'toDate' => 'b'
+        ));
+
+        /*
+            get the view returned from calling the 'calculatePHDStudentPayment'
+            of the 'PaymentController'
+        */
+        $view = $response->original;
+
+
+        $errorsReceived = $view['errors'];
+
+        /*
+            assert that the assert that the 'errors' variable (which is an array)
+            contained in the view has a value of
+            "Please ensure that you provide a 'from' and a 'to' date
+            in the format yyyy-mm-dd."
+        */
+        $this->assertContains(
+            "Please ensure that you provide a 'from' and a 'to' date
+            in the format yyyy-mm-dd.", $errorsReceived
+        );
+
     }
 
 }

@@ -98,7 +98,7 @@ class PaymentController extends Controller
 
             /*
                 return the calculatePHDStudentExpenditureResult.blade.php file
-                which is located under (resources\views) and pass it the variables:
+                and pass it the variables:
                     $sessions,
                     $totalPayment,
                     $phdStudent,
@@ -123,7 +123,7 @@ class PaymentController extends Controller
             ->orderBy('name')
             ->get();
             return view('calculatePHDStudentPayForm')->with([
-                'error'       => $errors,
+                'errors'       => $errors,
                 'phdStudents' => $phdStudents 
             ]);
         }
@@ -175,7 +175,10 @@ class PaymentController extends Controller
 
         $errors = array();
 
-        //check that $fromDate appears before $toDate chronologically
+        /* 
+            check that $fromDate appears before $toDate chronologically
+            i.e. that it is valid
+        */
         if(strtotime($fromDate) > strtotime($toDate)) {
             $dateError= 'Please make sure the from date is earlier than the to date.';
             array_push($errors, $dateError);
@@ -195,7 +198,8 @@ class PaymentController extends Controller
         */ 
         if (DateTime::createFromFormat('Y-m-d', $fromDate) == false
             || (DateTime::createFromFormat('Y-m-d', $toDate) == false)) {
-            $missingDateError = "Please ensure that you provide a 'from' and a 'to' date.";
+            $missingDateError = "Please ensure that you provide a 'from' and a 'to' date
+            in the format yyyy-mm-dd.";
             array_push($errors, $missingDateError);
         }
         return $errors;
