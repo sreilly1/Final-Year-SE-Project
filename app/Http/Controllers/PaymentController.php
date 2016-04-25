@@ -84,6 +84,12 @@ class PaymentController extends Controller
                 $teachingHours = $hoursWorkedToRoleMapping['Teaching'];
                 $totalPayment += $teachingHours * 10.58;
 
+                /*
+                    format the value for total payment to 2 decimal places and
+                    use '.' as the seperator for decimal points
+                */
+                $totalPayment = number_format($totalPayment, 2, '.', '');
+
             /*
                 return the calculatePHDStudentExpenditureResult.blade.php file
                 and pass it the variables:

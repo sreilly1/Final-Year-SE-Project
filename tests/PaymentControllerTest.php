@@ -43,7 +43,7 @@ class PaymentControllerTest extends TestCase
             assert that the value of the 'totalPayment' variable contained
             in the view has a value of 227.9
         */
-    	$this->assertEquals(227.9, $view['totalPayment']);
+    	$this->assertEquals(227.90, $view['totalPayment']);
 
 
         /*
